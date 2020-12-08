@@ -1,6 +1,7 @@
 #!python
 
 import re
+from PIL import Image, ImageDraw, ImageFont
 
 
 def parse_written(row, legend):
@@ -31,3 +32,20 @@ def parse_written(row, legend):
                         print(f"Error: Stitch {stitch} is not found in legend")
 
     return stitch_array
+
+def print_chart(stitch_array):
+    # Set up the image
+    cell_height = 50
+    cell_width = 50
+    chart_image = Image.new("RGB", ((cell_width+1)*len(stitch_array), cell_height), (200, 200, 200))
+
+    # draw some gridlines
+    draw = ImageDraw.Draw(chart_image)
+    for i in range(1, len(stitch_array)):
+        draw.line(((cell_width+1)*i, 0) + ((cell_width+1)*i, cell_height), fill=128)
+    return chart_image
+
+    # draw symbol for each cell
+    fnt = ImageFont.truetype("Pillow/Tests/fonts/FreeMono.ttf", 40)
+    draw.text((10, 10), "HI", font=fnt, fill=(255,255,255,255))
+
