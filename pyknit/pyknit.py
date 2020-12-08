@@ -2,15 +2,6 @@
 
 import re
 
-stitchstring = "k1 p4 k1 p4 k kfb r ssk k2tog"
-legend = {
-    "k": " ",
-    "p": ".",
-    "kfb": "\\/",
-    "ssk": "\\",
-    "k2tog": "k2tog",
-}
-
 
 def parse_written(row, legend):
     """Parse a written set of knitting instructions and print an array of stitches using a legend.
@@ -39,7 +30,4 @@ def parse_written(row, legend):
                         stitch_array.append(stitch)
                         print(f"Error: Stitch {stitch} is not found in legend")
 
-    print(stitch_array)
-
-
-parse_written(stitchstring, legend)
+    return stitch_array
