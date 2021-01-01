@@ -3,8 +3,11 @@ import setuptools
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
+with open("requirements.txt", "r", encoding="utf-8") as f:
+    requirements = f.read().split("\n")
+
 setuptools.setup(
-    name="pyknit", 
+    name="pyknit",
     version="0.0.1",
     author="Terri Oda",
     author_email="terri@toybox.ca",
@@ -19,5 +22,9 @@ setuptools.setup(
         "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
         "Operating System :: OS Independent",
     ],
-    python_requires='>=3.6',
+    python_requires=">=3.6",
+    entry_points={
+        "console_scripts": ["pyknit = pyknit.pyknit:main"],
+    },
+    install_requires=requirements
 )

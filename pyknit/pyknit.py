@@ -1,12 +1,14 @@
 #!python
 
+import argparse
 import re
 from PIL import Image, ImageDraw, ImageFont
 
 
 def parse_written(row, legend):
-    """Parse a written set of knitting instructions and print an array of stitches using a legend.
-    This is a stand in for eventually printing a chart."""
+    """Parse a written set of knitting instructions and print an array of
+    stitches using a legend.  This is a stand in for eventually printing a
+    chart."""
 
     stitch_array = []
     for section in row.split(" "):
@@ -33,19 +35,54 @@ def parse_written(row, legend):
 
     return stitch_array
 
+
 def print_chart(stitch_array):
     # Set up the image
     cell_height = 50
     cell_width = 50
-    chart_image = Image.new("RGB", ((cell_width+1)*len(stitch_array), cell_height), (200, 200, 200))
+    chart_image = Image.new(
+        "RGB", ((cell_width + 1) * len(stitch_array), cell_height), (200, 200, 200)
+    )
 
     # draw some gridlines
     draw = ImageDraw.Draw(chart_image)
     for i in range(1, len(stitch_array)):
-        draw.line(((cell_width+1)*i, 0) + ((cell_width+1)*i, cell_height), fill=128)
+        draw.line(
+            ((cell_width + 1) * i, 0) + ((cell_width + 1) * i, cell_height), fill=128
+        )
     return chart_image
 
     # draw symbol for each cell
     fnt = ImageFont.truetype("Pillow/Tests/fonts/FreeMono.ttf", 40)
-    draw.text((10, 10), "HI", font=fnt, fill=(255,255,255,255))
+    draw.text((10, 10), "HI", font=fnt, fill=(255, 255, 255, 255))
 
+
+def main():
+    print("PyKnit 0.0.1")
+    desc = """
+    This package is intended for use as a library inside jupyter notebook, 
+    so that you can see charts as they're parsed.
+
+    For fun, this command line version will take a string and attempt to parse
+    it into a python array of individual stitches. 
+    """
+    parser = argparse.ArgumentParser(description=desc)
+    parser.add_argument(
+        "instruction_row",
+        help="A row of knitting instructions. e.g. 'k2 p4'",
+    )
+    args = parser.parse_args()
+    legend = {
+        "k": "k",
+        "p": "p",
+        "kfb": "kfb",
+        "ssk": "ssk",
+        "k2tog": "k2tog",
+        "p2tog": "p2tog",
+    }
+
+    print(parse_written(args.instruction_row, legend))
+
+
+if __name__ == "__main__":
+    main()
