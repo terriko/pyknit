@@ -1,6 +1,7 @@
 #!python
 
 import argparse
+import math
 import re
 from PIL import Image, ImageDraw, ImageFont
 
@@ -37,6 +38,8 @@ def parse_written(row, legend):
 
 
 def print_chart(stitch_array):
+    """ Print a chart from a stitch array """
+
     # Set up the image
     cell_height = 50
     cell_width = 50
@@ -55,6 +58,43 @@ def print_chart(stitch_array):
     # draw symbol for each cell
     fnt = ImageFont.truetype("Pillow/Tests/fonts/FreeMono.ttf", 40)
     draw.text((10, 10), "HI", font=fnt, fill=(255, 255, 255, 255))
+
+
+def increase_evenly(starting_count, increase_number, in_the_round=False):
+    """ A function to figure out even spacing for increases """
+
+    if in_the_round == False:
+        # to avoid increases at start/end of row in a flat piece, add 1
+        increase_spacing = increase_number + 1
+    else:
+        increase_spacing = increase_number
+
+    interval = math.floor(starting_count / (increase_spacing))
+    remainder = starting_count % increase_spacing
+
+    # TODO: spread out the remainder nicely.  For now, we're tacking it on the enda
+    # TODO: Honestly, I think something is wrong in the math in the round.
+    print(f"increase {interval} stitches with remainder {remainder}")
+
+    # This nested f thing is probably not the most readable
+    print(f'{(f"k{interval}, m1, ")*increase_number}k{interval+remainder}')
+
+
+def decrease_evenly(starting_count, decrease_number, in_the_round=False):
+    """ A function to figure out spacing for decreases """
+
+
+def sleeve_decreases(number_of_rows, starting_count, ending_count, decrease_per_row=2):
+    """ A function to figure out a nice even sleeve decrease. """
+
+
+def row_count(stitch_array, legend):
+    if legend:
+        # Do calculations per stitch
+        return len(stitch_array)
+
+    # otherwise, assume every stitch has width=1
+    return len(stitch_array)
 
 
 def main():
