@@ -4,9 +4,10 @@ import argparse
 import math
 import re
 from PIL import Image, ImageDraw, ImageFont
+from typing import Set
 
 
-def parse_written(row, legend):
+def parse_written(row: str, legend: Set[str]) -> Set[str]:
     """Parse a written set of knitting instructions and print an array of
     stitches using a legend.  This is a stand in for eventually printing a
     chart."""
@@ -37,7 +38,7 @@ def parse_written(row, legend):
     return stitch_array
 
 
-def print_chart(stitch_array):
+def print_chart(stitch_array: Set[str]) -> Image:
     """ Print a chart from a stitch array """
 
     # Set up the image
@@ -60,7 +61,9 @@ def print_chart(stitch_array):
     draw.text((10, 10), "HI", font=fnt, fill=(255, 255, 255, 255))
 
 
-def increase_evenly(starting_count, increase_number, in_the_round=False):
+def increase_evenly(
+    starting_count: int, increase_number: int, in_the_round: bool = False
+):
     """ A function to figure out even spacing for increases """
 
     if in_the_round == False:
@@ -80,15 +83,22 @@ def increase_evenly(starting_count, increase_number, in_the_round=False):
     print(f'{(f"k{interval}, m1, ")*increase_number}k{interval+remainder}')
 
 
-def decrease_evenly(starting_count, decrease_number, in_the_round=False):
+def decrease_evenly(
+    starting_count: int, decrease_number: int, in_the_round: bool = False
+):
     """ A function to figure out spacing for decreases """
 
 
-def sleeve_decreases(number_of_rows, starting_count, ending_count, decrease_per_row=2):
+def sleeve_decreases(
+    number_of_rows: int,
+    starting_count: int,
+    ending_count: int,
+    decrease_per_row: int = 2,
+):
     """ A function to figure out a nice even sleeve decrease. """
 
 
-def row_count(stitch_array, legend):
+def stitch_count(stitch_array: Set[str], legend: Set[str]) -> int:
     if legend:
         # Do calculations per stitch
         return len(stitch_array)
