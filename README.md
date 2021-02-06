@@ -57,3 +57,7 @@ If you find a security issue and want to contact me privately, [send me an
 email](https://github.com/terriko/).  It might feel silly to talk about
 security issues in knitting software, but it *does* parse things and display
 things, so it's possible!
+
+## License
+
+pyKnit is licensed under the [GPL-2.0 License](https://github.com/terriko/pyknit/blob/main/LICENSE)
