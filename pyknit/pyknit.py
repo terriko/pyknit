@@ -75,23 +75,33 @@ def increase_evenly(
     interval = math.floor(starting_count / (increase_spacing))
     remainder = starting_count % increase_spacing
 
-    # print(f"increase {interval} stitches with remainder {remainder}")
-
     # first set of increases
-    instruction_string = ["", ""]
-    instruction_string[0] = f"[k{interval}, m1] * {increase_spacing-remainder} times"
-
-    # second set of increases
-    if in_the_round == False:
-        instruction_string[
-            1
-        ] = f"[k{interval+1}, m1] * {remainder-1} times, k{interval+1}"
+    if increase_spacing - remainder > 1:
+        instruction_string = f"[k{interval}, m1] * {increase_spacing-remainder} times"
     else:
-        instruction_string[1] = f"[k{interval+1}, m1] * {remainder} times"
+        instruction_string = f"k{interval}, m1"
 
-    print(", ".join(instruction_string))
+    # second set of increases (if needed)
+    if remainder > 0:
+        if in_the_round == False:
+            if remainder - 1 > 1:
+                instruction_string += (
+                    f", [k{interval+1}, m1] * {remainder-1} times, k{interval+1}"
+                )
+            else:
+                instruction_string += f", k{interval+1}, m1, k{interval+1}"
+        else:
+            if remainder > 1:
+                instruction_string += f", [k{interval+1}, m1] * {remainder} times"
+            else:
+                instruction_string += f", k{interval+1}, m1"
 
-    return ", ".join(instruction_string)
+    # if we still need a selvage, add that
+    else:
+        if in_the_round == False:
+            instruction_string += f", k{interval}"
+
+    return instruction_string
 
 
 def decrease_evenly(
