@@ -67,7 +67,7 @@ def increase_evenly(
     """ A function to figure out even spacing for increases """
 
     if in_the_round == False:
-        # to avoid increases at start/end of row in a flat piece, add 1
+        # It's increase+1 so that you don't have increases at either the start or end of a row
         increase_spacing = increase_number + 1
     else:
         increase_spacing = increase_number
@@ -75,12 +75,23 @@ def increase_evenly(
     interval = math.floor(starting_count / (increase_spacing))
     remainder = starting_count % increase_spacing
 
-    # TODO: spread out the remainder nicely.  For now, we're tacking it on the enda
-    # TODO: Honestly, I think something is wrong in the math in the round.
-    print(f"increase {interval} stitches with remainder {remainder}")
+    # print(f"increase {interval} stitches with remainder {remainder}")
 
-    # This nested f thing is probably not the most readable
-    print(f'{(f"k{interval}, m1, ")*increase_number}k{interval+remainder}')
+    # first set of increases
+    instruction_string = ["", ""]
+    instruction_string[0] = f"[k{interval}, m1] * {increase_spacing-remainder} times"
+
+    # second set of increases
+    if in_the_round == False:
+        instruction_string[
+            1
+        ] = f"[k{interval+1}, m1] * {remainder-1} times, k{interval+1}"
+    else:
+        instruction_string[1] = f"[k{interval+1}, m1] * {remainder} times"
+
+    print(", ".join(instruction_string))
+
+    return ", ".join(instruction_string)
 
 
 def decrease_evenly(
