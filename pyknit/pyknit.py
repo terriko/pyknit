@@ -1,4 +1,8 @@
 #!python
+"""
+pyKnit: a set of tools for knitters to do math, create charts, customise
+patterns and more
+"""
 
 import argparse
 import math
@@ -23,7 +27,8 @@ def parse_written(row: str, legend: Set[str]) -> Set[str]:
         for pat in patterns:
             result = re.match(pat, section)
             if result and not matched_stitch:
-                # only match one pattern per stitch so k2tog doesn't also get parsed as k2
+                # only match one pattern per stitch so k2tog doesn't
+                # get parsed as k2
                 matched_stitch = True
                 stitch = result.group(1)
                 # set the number or if no number, assume you repeat once
@@ -66,8 +71,9 @@ def increase_evenly(
 ):
     """ A function to figure out even spacing for increases """
 
-    if in_the_round == False:
-        # It's increase+1 so that you don't have increases at either the start or end of a row
+    if not in_the_round:
+        # It's increase+1 so that you don't have increases at either
+        # the start or end of a row
         increase_spacing = increase_number + 1
     else:
         increase_spacing = increase_number
@@ -83,7 +89,7 @@ def increase_evenly(
 
     # second set of increases (if needed)
     if remainder > 0:
-        if in_the_round == False:
+        if not in_the_round:
             if remainder - 1 > 1:
                 instruction_string += (
                     f", [k{interval+1}, m1] * {remainder-1} times, k{interval+1}"
@@ -98,7 +104,7 @@ def increase_evenly(
 
     # if we still need a selvage, add that
     else:
-        if in_the_round == False:
+        if not in_the_round:
             instruction_string += f", k{interval}"
 
     return instruction_string
@@ -131,11 +137,11 @@ def stitch_count(stitch_array: Set[str], legend: Set[str]) -> int:
 def main():
     print("PyKnit 0.0.1")
     desc = """
-    This package is intended for use as a library inside jupyter notebook, 
+    This package is intended for use as a library inside jupyter notebook,
     so that you can see charts as they're parsed.
 
     For fun, this command line version will take a string and attempt to parse
-    it into a python array of individual stitches. 
+    it into a python array of individual stitches.
     """
     parser = argparse.ArgumentParser(description=desc)
     parser.add_argument(
