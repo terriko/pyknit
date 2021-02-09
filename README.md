@@ -27,12 +27,14 @@ jupyter-lab
 
 From there, jupyter lab will open in a browser, and you can create a new notebook to play around.  When you're done, you can shut down the notebook server using `^C` in the console and typing `y` when it asks if you want to shut down.  You can deactivate the virtualenv by typing `deactivate` and pressing enter.
 
-If you want to run it again later, you do the following:
+If you want to run it again later, you can do the following:
 
-```
+```console
 source ~/venv-3.8-jupyter/bin/activate
 jupyter-lab
 ```
+
+(The virtualenv only needs to be created once, and you don't need to reinstall.)
 
 If you don't want to use Jupyter, it will also work as any standard python library.
 
