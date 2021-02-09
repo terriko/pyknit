@@ -10,6 +10,71 @@ import re
 from PIL import Image, ImageDraw, ImageFont
 from typing import Set
 
+VERSION = "pyKnit 0.0.2"
+
+
+class Swatch:
+    """Information from a gauge swatch"""
+
+    def __init__(
+        self,
+        row_count: int,
+        row_measure: float,
+        stitch_count: int,
+        stitch_measure: float,
+        units: str,
+    ):
+        self.row_count = row_count
+        self.row_measure = row_measure
+        self.stitch_count = stitch_count
+        self.stitch_measure = stitch_measure
+        self.units = units
+        # TODO: add yardage/weight for calculations?
+
+    def row_gauge() -> float:
+        """ return rows per unit (e.g. cm, inch) number """
+        return self.row_count / self.row_measure
+
+    def stitch_gauge() -> float:
+        """ return stitches per unit (e.g. cm, inch) number """
+        return self.stitch_count / self.stitch_measure
+
+    def measurement_to_stiches(measurement: float) -> int:
+        """
+        Given a measurement, how many stiches would we need?
+        Round to closest stitch.
+        """
+        return math.round(measurement * stitch_gauge())
+
+    def measurement_to_rows(measurement: float) -> int:
+        """
+        Given a measurement, how many rows would we need?
+        Round to closest number of rows."""
+        return math.round(measurement * row_gauge())
+
+    def rows_to_measurement(rows: int) -> float:
+        """ figure out how long a number of rows will be """
+        return rows / row_gauge()
+
+    def stitches_to_measurement(stitches: int) -> float:
+        """ figure out how wide a number of stitches will be """
+        return stitches / stitch_gauge()
+
+
+# Gauge and stich count related functions
+
+
+def stitch_count(stitch_array: Set[str], legend: Set[str]) -> int:
+    if legend:
+        # Do calculations per stitch
+        return len(stitch_array)
+
+    # otherwise, assume every stitch has width=1
+    return len(stitch_array)
+
+
+## Chart and pattern parsing functions
+
 
 def parse_written(row: str, legend: Set[str]) -> Set[str]:
     """Parse a written set of knitting instructions and print an array of
@@ -66,6 +131,7 @@ def print_chart(stitch_array: Set[str]) -> Image:
     draw.text((10, 10), "HI", font=fnt, fill=(255, 255, 255, 255))
 
 
+# Increase and decrease functions
 def increase_evenly(
     starting_count: int, increase_number: int, in_the_round: bool = False
 ):
@@ -125,17 +191,8 @@ def sleeve_decreases(
     """ A function to figure out a nice even sleeve decrease. """
 
 
-def stitch_count(stitch_array: Set[str], legend: Set[str]) -> int:
-    if legend:
-        # Do calculations per stitch
-        return len(stitch_array)
-
-    # otherwise, assume every stitch has width=1
-    return len(stitch_array)
-
-
 def main():
-    print("PyKnit 0.0.1")
+    print(VERSION)
     desc = """
     This package is intended for use as a library inside jupyter notebook,
     so that you can see charts as they're parsed.
