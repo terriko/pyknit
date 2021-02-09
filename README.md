@@ -15,11 +15,25 @@ virtualenv if you're using one) so that you can use `import pyknit` and have it
 work. (You can [read more about how to install a python Package in Jupyter
 here](https://jakevdp.github.io/blog/2017/12/05/installing-python-packages-from-jupyter/).)
 
+I prefer to use virtualenv and pip, so I set up my environment as follows:
+
+```console
+virtualenv -p python 3.8 venv-3.8-jupyter
+source venv-3.8-jupyter/bin/activate
+pip install jupyterlab
+pip install pyknit
+jupyter-lab
+```
+
+From there, jupyter lab will open in a browser, and you can create a new notebook to play around.  (When you're done, you can shut down the notebook server using `^C` in the console and typing `y` when it asks if you want to shut down.  You can deactivate the virtualenv by typing `deactivate` and pressing enter.)
+
 If you don't want to use Jupyter, it will also work as any standard python library.
 
 `pip install pyknit`
 
-And then go ahead and import it into your Python program.
+And then go ahead and import it into your Python program.  There's also a
+minimal command line interface which could be expanded if anyone actually wants
+to use it.
 
 ## Why pyKnit?
 
