@@ -66,7 +66,7 @@ class Swatch:
 
 def stitch_count(stitch_array: Set[str], legend: Set[str]) -> int:
     if legend:
-        # Do calculations per stitch
+        # FIXME: Do calculations per stitch
         return len(stitch_array)
 
     # otherwise, assume every stitch has width=1
@@ -132,9 +132,11 @@ def print_chart(stitch_array: Set[str]) -> Image:
 
 
 # Increase and decrease functions
+
+
 def increase_evenly(
     starting_count: int, increase_number: int, in_the_round: bool = False
-):
+) -> str:
     """ A function to figure out even spacing for increases """
 
     if not in_the_round:
@@ -187,8 +189,51 @@ def sleeve_decreases(
     starting_count: int,
     ending_count: int,
     decrease_per_row: int = 2,
-):
+) -> str:
     """ A function to figure out a nice even sleeve decrease. """
+
+    # TODO: This function is going to be pretty similar to the decrease_evenly()
+    # function.  We may want to combine them later.
+
+    if starting_count <= ending_count:
+        print(
+            f"Error: No decreases needed, {starting_count} is already smaller than {ending_count}"
+        )
+
+    # How many times are we doing the decrease row?
+    number_of_decrease_rows = math.floor(
+        (starting_count - ending_count) / decrease_per_row
+    )
+    if ((starting_count - ending_count) % decrease_per_row) > 0:
+        # TODO: we could probably do this math for people if we wanted
+        print(
+            f"Warning: desired decrease doesn't work exactly with a {decrease_per_row} decrease"
+        )
+        print(
+            "Printing the closest alternative but you'll need to add decreases at the end"
+        )
+
+    # divide up the number of rows.
+    # This gives you a decrease on the first row but padding after the last
+    # TODO: make an option for padding both sides, padding neither?
+
+    interval = math.floor(
+        (number_of_rows - number_of_decrease_rows) / number_of_decrease_rows
+    )
+    remainder = (number_of_rows - number_of_decrease_rows) % number_of_decrease_rows
+
+    # If we had any remainder, pad out the early decreases
+    instruction_string = ""
+    if remainder > 0:
+        instruction_string += (
+            f"[decrease row, do {interval+1} rows in pattern] * {remainder} times, "
+        )
+    instruction_string += f"[decrease row, do {interval} rows in pattern] * {number_of_decrease_rows - remainder} times"
+
+    return instruction_string
+
+
+import math
 
 
 def main():
