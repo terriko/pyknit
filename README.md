@@ -4,11 +4,23 @@ A set of tools for knitters to do math, create charts, and eventually more.
 ![pyknit](https://github.com/terriko/pyknit/workflows/pyknit/badge.svg?branch=main&event=push)
 [![On PyPI](https://img.shields.io/pypi/v/pyknit)](https://pypi.org/project/pyknit/)
 
-## Usage
+## Command Line Usage
+
+If you don't care about charts (and let's be honest, most of those functions aren't working yet so you probably don't) you can use pyknit from the command line.
+
+`pip install pyknit`
+
+or if you want to use the latest and greatest [grab pyknit from github](https://github.com/terriko/pyknit) and run `python` in that directory so you can `import pyknit` and have it work.
+
+[Here's an exmaple of how to calculate sweater sleeve decreases using pyknit.] to get you started.  If you want to write more examples, that would be awesome!
+
+
+## Jupyter-lab Usage 
 
 pyKnit works best in conjunction with [Jupyter](https://jupyter.org/install).
 This allows you to "mess around" with the functions and see the results in your
 browser.  I like this especially for the ability to display the charts inline.
+
 
 Make sure you install Jupyter and pyknit in the same place (e.g. in the same
 virtualenv if you're using one) so that you can use `import pyknit` and have it
