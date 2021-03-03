@@ -6,7 +6,8 @@ First, I want to enter the data from my gauge swatch so I can do the right
 calculations.  I like to take pictures of my washed and blocked swatches so I
 have that data handy on my phone if I need it.
 
-FIXME: Add photos here
+![Sweater Swatch: Rows](swatch-rows.png)
+![Sweater Swatch: Stitches](swatch-stitches.png)
 
 The original sweater pattern was 24 stitches and 18 rows for a 4x4inch swatch,
 but my row count didn't line up, so I know I'm going to be doing something
