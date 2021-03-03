@@ -8,7 +8,7 @@ with open("requirements.txt", "r", encoding="utf-8") as f:
 
 setuptools.setup(
     name="pyknit",
-    version="0.0.1",
+    version="0.0.3",
     author="Terri Oda",
     author_email="terri@toybox.ca",
     description="A set of tools for knitters to create charts and eventually more.",

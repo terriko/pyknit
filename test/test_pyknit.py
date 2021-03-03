@@ -1,7 +1,7 @@
 #!python
 
 import pytest
-from pyknit import pyknit
+import pyknit
 
 
 def test1():
@@ -30,7 +30,7 @@ def test1():
         "\\",
         "k2tog",
     ]
-    output_array = pyknit.parse_written(stitchstring, legend)
+    output_array = pyknit.Chart.parse_written(stitchstring, legend)
     assert output_array == expected
 
 
