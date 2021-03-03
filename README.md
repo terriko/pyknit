@@ -12,7 +12,7 @@ If you don't care about charts (and let's be honest, most of those functions are
 
 or if you want to use the latest and greatest [grab pyknit from github](https://github.com/terriko/pyknit) and run `python` in that directory so you can `import pyknit` and have it work.
 
-[Here's an exmaple of how to calculate sweater sleeve decreases using pyknit.] to get you started.  If you want to write more examples, that would be awesome!
+[Here's an exmaple of how to calculate sweater sleeve decreases using pyknit](https://github.com/terriko/pyknit/blob/main/documentation/SleeveDecreases.md) to get you started.  If you want to write more examples, that would be awesome!
 
 
 ## Jupyter-lab Usage 
