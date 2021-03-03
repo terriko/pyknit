@@ -12,7 +12,7 @@ The original sweater pattern was 24 stitches and 18 rows for a 4x4inch swatch,
 but my row count didn't line up, so I know I'm going to be doing something
 different than the original pattern.  Let's import what I've got into a swatch. 
 
-``python
+```python
 import pyknit
 sweaterSwatch = Swatch(row_count=18, row_measure=3.25, stitch_count=24, stitch_measure=4, units="in")
 ```
