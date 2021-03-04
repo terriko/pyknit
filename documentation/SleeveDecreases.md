@@ -9,7 +9,7 @@ have that data handy on my phone if I need it.
 ![Sweater Swatch: Rows](swatch-rows.png)
 ![Sweater Swatch: Stitches](swatch-stitches.png)
 
-The original sweater pattern was 24 stitches and 18 rows for a 4x4inch swatch,
+The original sweater pattern was 24 stitches and 18 rows for a 4x4 inch swatch,
 but my row count didn't line up, so I know I'm going to be doing something
 different than the original pattern.  Let's import what I've got into a swatch. 
 
@@ -27,7 +27,7 @@ print(sweaterSwatch.measurement_to_rows(11))
 
 Okay, so that's another 61 rows.  
 
-Looking back at the pattern, I hve a starting count of 59 stitches and want an ending count of 43.  (I check the measurement from the pattern diagram to see if I really want the sleeve that size, but it turns out that the sleeve width is fine so I'm not customizing it.)  This pattern uses a fairly common 2-stiches decreased in every decrease row pattern.  So let's enter that all into pyknit:
+Looking back at the pattern, I have a starting count of 59 stitches and want an ending count of 43.  (I check the measurement from the pattern diagram to see if I really want the sleeve that size, but it turns out that the sleeve width is fine so I'm not customizing it.)  This pattern uses a fairly common 2-stiches decreased in every decrease row pattern.  So let's enter that all into pyknit:
 
 ```python
 print(pyknit.sleeve_decreases(61, starting_count=59, ending_count=43, decrease_per_row=2))
