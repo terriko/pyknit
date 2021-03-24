@@ -114,6 +114,55 @@ def sleeve_decreases(
     return instruction_string
 
 
+def raglan_increases(
+    neck_stitches: int,
+    arm_stitches: int,
+    bust_stitches: int,
+    neck_to_bust_rows=int,
+    increase_per_increase_row: int = 8,
+    armpit_stitches: int = 4,
+) -> str:
+    """Tool for adjusting raglan sweaters to increase arm size or bust size.
+
+    For a standard raglan, you increase along 4 diagonal lines over the front
+    and back of the shoulders.  Each line has an increase on either side.
+
+    Tutorial for a well-documented raglan here:
+    https://blog.tincanknits.com/2013/10/25/lets-knit-a-sweater/"""
+
+    # Adjusting from collar to start of raglan
+    instruction_string = ""
+    # the final stitch count is bust_stitches + 2 * arm stitches
+    # but that includes the added armpit stitches on both sides+sleeves
+    working_stitches = bust_stitches + (2 * arm_stitches) - (4 * armpit_stitches)
+
+    # Work backwards and see if you get the collar number
+    calculated_neck = working_stitches - neck_to_bust_rows * increase_per_increase_row
+
+    # if calculated_neck and neck_stitches don't match, make adjustments
+
+    if calculated_neck > neck_stitches:
+        # Add an increase row to go from your actual collar size to raglan start
+        instruction_string += "Increase row: "
+        instruction_string += increase_evenly(
+            neck_stitches, calculated_neck - neck_stitches, in_the_round=True
+        )
+
+    if calculated_neck < neck_stitches:
+        # you don't need to increase every row in the raglan section
+        # We'll put the non-increase rows at the end before the armpit section
+        no_increase_rows = 555
+
+    # generate some standard raglan instructions
+    # we're assuming the beginning of row is the middle of the back here
+    body = 555
+    arm = 555
+    instruction_string += f"Marker setup: k{math.floor(body/4)}, pm, k{arm} (arm), pm, "
+    instruction_string += f"k{body/2}, pm, k{arm} (arm), pm k{math.ceil(body/4)}"
+
+    return instruction_string
+
+
 def main():
     print(VERSION)
     desc = """
