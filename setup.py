@@ -1,3 +1,6 @@
+# Copyright (C) 2021 Terri Oda
+# SPDX-License-Identifier: GPL-2.0-or-later
+
 import setuptools
 
 with open("README.md", "r", encoding="utf-8") as fh:
