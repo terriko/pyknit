@@ -121,7 +121,7 @@ def raglan_increases(
     neck_stitches: int,
     arm_stitches: int,
     bust_stitches: int,
-    neck_to_bust_rows=int,
+    neck_to_bust_rows: int,
     increase_per_increase_row: int = 8,
     armpit_stitches: int = 4,
 ) -> str:
@@ -154,14 +154,20 @@ def raglan_increases(
     if calculated_neck < neck_stitches:
         # you don't need to increase every row in the raglan section
         # We'll put the non-increase rows at the end before the armpit section
-        no_increase_rows = 555
+        no_increase_rows = 555 # FIXME
 
     # generate some standard raglan instructions
     # we're assuming the beginning of row is the middle of the back here
-    body = 555
-    arm = 555
-    instruction_string += f"Marker setup: k{math.floor(body/4)}, pm, k{arm} (arm), pm, "
-    instruction_string += f"k{body/2}, pm, k{arm} (arm), pm k{math.ceil(body/4)}"
+    body_start = bust_stitches/2 - neck_to_bust_rows*2 - armpit_stitches
+
+    # in case our count is uneven
+    front = math.ceil(body_start)
+    back = math.floor(body_start)
+
+    arm = arm_stitches - armpit_stitches - neck_to_bust_rows*2
+
+    instruction_string += f"Marker setup: k{math.floor(back/2)}, pm, k{arm} (arm), pm, "
+    instruction_string += f"k{front}, pm, k{arm} (arm), pm k{math.ceil(back/2)}"
 
     return instruction_string
 
