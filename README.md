@@ -30,8 +30,8 @@ here](https://jakevdp.github.io/blog/2017/12/05/installing-python-packages-from-
 I prefer to use virtualenv and pip, so I set up my environment as follows:
 
 ```console
-virtualenv -p python 3.8 venv-3.8-jupyter
-source ~/venv-3.8-jupyter/bin/activate
+virtualenv -p python3.8 venv-3.8-jupyter
+source venv-3.8-jupyter/bin/activate
 pip install jupyterlab
 pip install pyknit
 jupyter-lab
