@@ -15,7 +15,7 @@ If you don't care about charts (and let's be honest, most of those functions are
 
 or if you want to use the latest and greatest [grab pyknit from github](https://github.com/terriko/pyknit) and run `python` in that directory so you can `import pyknit` and have it work.
 
-[Here's an exmaple of how to calculate sweater sleeve decreases using pyknit](https://github.com/terriko/pyknit/blob/main/documentation/SleeveDecreases.md) to get you started.  If you want to write more examples, that would be awesome!
+[Here's an example of how to calculate sweater sleeve decreases using pyknit](https://github.com/terriko/pyknit/blob/main/documentation/SleeveDecreases.md) to get you started.  If you want to write more examples, that would be awesome!
 
 
 ## Jupyter-lab Usage 
@@ -33,8 +33,8 @@ here](https://jakevdp.github.io/blog/2017/12/05/installing-python-packages-from-
 I prefer to use virtualenv and pip, so I set up my environment as follows:
 
 ```console
-virtualenv -p python 3.8 venv-3.8-jupyter
-source ~/venv-3.8-jupyter/bin/activate
+virtualenv -p python3.8 venv-3.8-jupyter
+source venv-3.8-jupyter/bin/activate
 pip install jupyterlab
 pip install pyknit
 jupyter-lab
@@ -45,7 +45,7 @@ From there, jupyter lab will open in a browser, and you can create a new noteboo
 If you want to run it again later, you can do the following:
 
 ```console
-source ~/venv-3.8-jupyter/bin/activate
+source venv-3.8-jupyter/bin/activate
 jupyter-lab
 ```
 
