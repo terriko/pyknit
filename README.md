@@ -42,7 +42,7 @@ From there, jupyter lab will open in a browser, and you can create a new noteboo
 If you want to run it again later, you can do the following:
 
 ```console
-source ~/venv-3.8-jupyter/bin/activate
+source venv-3.8-jupyter/bin/activate
 jupyter-lab
 ```
 
