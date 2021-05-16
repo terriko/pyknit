@@ -1,4 +1,7 @@
 # pyKnit
+
+![pyKnit](pyknit-logolong.png)
+
 A set of tools for knitters to do math, create charts, and eventually more.
 
 ![pyknit](https://github.com/terriko/pyknit/workflows/pyknit/badge.svg?branch=main&event=push)
