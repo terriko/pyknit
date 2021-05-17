@@ -13,6 +13,41 @@ import re
 from PIL import Image, ImageDraw, ImageFont
 from typing import Set
 
+stitch_legend = {
+    "k": {
+        "instruction": "knit",
+        "symbol": " ",
+        "width": 1,
+    },
+    "kfb": {
+        "instruction": "knit front and back",
+        "symbol": "V",
+        "width": 1,
+    },
+    "k2tog": {
+        "instruction": "knit two together",
+        "symbol": "/",
+        "width": 1,
+    },
+    # "p": ".",
+    # "ssk": "\\",
+}
+
+class Stitch:
+    def __init__(self, stitch_name):
+        if stitch_name not in stitch_legend:
+            raise KeyError(f"Stitch '{stitch_name}' not found.")
+
+        stitch_info = stitch_legend[stitch_name]
+
+        self.instruction = stitch_info["instruction"]
+        self.symbol = stitch_info["symbol"]
+        self.width = stitch_info["width"]
+
+    def __repr__(self):
+        return f"{self.instruction}"
+
+        
 
 ## Chart and pattern parsing functions
 
