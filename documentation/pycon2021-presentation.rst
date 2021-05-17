@@ -357,7 +357,7 @@ Getting pyKnit:
 * Contributors welcome!
 
 
-And that’s it! Go forth, try it out and make perfect sweater sleeves or calf increases on your socks.  And I hope some of you are interested in building more more tools with me.  I’m on sabbatical through mid-June so now’s a great time to have some fun with a low-stress coding project.  
+And that’s it! Go forth, try it out and make perfect sweater sleeves or calf increases on your socks.  And I hope some of you are interested in building more tools with me.  I’m on sabbatical through mid-June so now’s a great time to have some fun with a low-stress coding project.  
 
 
 * Knitting: `Winterfell Cardi by Katrin Schneider <https://www.ravelry.com/patterns/library/winterfell-cardigan-aran>`_
