@@ -13,11 +13,11 @@ import re
 from PIL import Image, ImageDraw, ImageFont
 from typing import Set
 
-stitch_legend = {
+stitch_legend = {  # Default legend. Incomplete for now.
     "k": {
         "instruction": "knit",
         "symbol": " ",
-        "width": 1,
+        "width": 1,  
     },
     "kfb": {
         "instruction": "knit front and back",
@@ -27,6 +27,11 @@ stitch_legend = {
     "k2tog": {
         "instruction": "knit two together",
         "symbol": "/",
+        "width": 1,
+    },
+    "r": {
+        "instruction": "r",  # instruction?
+        "symbol": "r",  # symbol?
         "width": 1,
     },
     "p": {
@@ -42,11 +47,12 @@ stitch_legend = {
 }
 
 class Stitch:
-    def __init__(self, stitch_name):
-        if stitch_name not in stitch_legend:
-            raise KeyError(f"Stitch '{stitch_name}' not found.")
+    """A class to represent a stitch. Optionally, a preferred legend can be passed in."""
+    def __init__(self, stitch_name: str, legend: Set[str]=stitch_legend):
+        if stitch_name not in legend:
+            raise KeyError(f"Stitch '{stitch_name}' not found in legend.")
 
-        stitch_info = stitch_legend[stitch_name]
+        stitch_info = legend[stitch_name]
 
         self.instruction = stitch_info["instruction"]
         self.symbol = stitch_info["symbol"]
@@ -84,11 +90,7 @@ def parse_written(row: str, legend: Set[str]=stitch_legend) -> Set[str]:
                 # set the number or if no number, assume you repeat once
                 number = int(result.group(2)) if result.group(2) else 1
                 for i in range(0, number):
-                    if stitch in legend:
-                        stitch_array.append(Stitch(stitch))
-                    else:
-                        stitch_array.append(stitch)
-                        print(f"Error: Stitch {stitch} is not found in legend")
+                    stitch_array.append(Stitch(stitch, legend))
 
     return stitch_array
 
@@ -114,6 +116,6 @@ def print_chart(stitch_array: Set[str]) -> Image:
     fnt = ImageFont.truetype("Courier New.ttf", 40)
     for i, stitch in enumerate(stitch_array):
         draw.text(
-            ((cell_width + 1) * i, 3), stitch, font=fnt, fill=(255, 255, 255, 255)
+            ((cell_width + 1) * i, 3), stitch.symbol, font=fnt, fill=(255, 255, 255, 255)
         )
     return chart_image
