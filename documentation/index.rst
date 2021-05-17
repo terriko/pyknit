@@ -17,6 +17,7 @@ A set of tools for knitters to do math, create charts, and eventually more.
 
    README.md
    SleeveDecreases.md
+   pycon2021-presentation.rst
 
 Indices and tables
 ==================
