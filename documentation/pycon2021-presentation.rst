@@ -3,6 +3,7 @@ PyCon 2021 Presentation - pyKnit: Math Tools For Knitters
 
 `Original slides with notes <https://docs.google.com/presentation/d/1Kr7Nmzgs5RCqx3kxyMDXwGNGe9Skq8E4bquLQhI3fdo/edit?usp=sharing>`_ (Link goes to Google Slides)
 
+This is the collection of written notes I made with each slide.  It's not the same as a transcript, but it's roughly what I wanted to say before I started recording, so it should be somewhat close.
 
 0. pyKnit: Math Tools for Knitters (title slide)
 ------------------------------------------------
@@ -292,24 +293,35 @@ And then the other reason is really Jupyter Notebook.  When I was a grad student
 
   Slide is titled "Sweater Decrease Example" and the code is shown in the text below.
 
-So what does pyknit actually look like?  Not much yet!  But remember those sleeve calculations?  Here’s what it looks like in pyknit. [describe what’s being calculated then show final sweater]
-
-
-::
+So what does pyknit actually look like?  Not much yet!  But remember those sleeve calculations?  Here’s what it looks like in pyknit::
 
   import pyknit
-  sweaterSwatch = Swatch(row_count=18, row_measure=3.25, stitch_count=24, stitch_measure=4, units="in")
+  sweaterSwatch = GaugeSwatch(row_count=18, row_measure=3.25, stitch_count=24, stitch_measure=4, units="in")
   # shorten sleeve decrease section to 11 inches
   sleeve_rows = sweaterSwatch.measurement_to_rows(11)  
   # sleeve_rows is 61
   # starting bicep stitch count and ending wrist stitch count from pattern, because they were ok
   print(pyknit.sleeve_decreases(sleeve_rows, starting_count=59, ending_count=43, decrease_per_row=2))
 
+
+I wear a fairly large fitness tracker and have discovered that I don't love having it stuck underneath my sweater sleeve, so I was aiming to make a shorter sleeve based on my personal measurements. (note that the "Swatch" class was renamed to "GaugeSwatch" later in development)
+
+You can see from my swatch information that I hadn't gotten the expected gauge, because my row measure was 3.25 inches instead of the expected 4.  So I definitely needed to do the math here even if I hadn't wanted particularly short sleeves.
+
+This particular pattern had you knit straight from the shoulders for a few inches, so I measured my arm from that point (while wearing the unfinished sweater) to the position above my wrist where I wanted the sleeve to end, and got 11 inches.  We use the GaugeSwatch class to convert that measurement to rows and get 61 rows.
+
+My stitch gauge for this pattern was correct and I liked the measurements, so I use the starting stitch count and ending stitch count from the pattern.  This pattern also uses the common 2-decreases per decrease row for a sleeve.
+
 This code gives the following output::
 
   [decrease row, do 7 rows in pattern] * 5 times, [decrease row, do 6 rows in pattern] * 3 times
 
-FIXME: make sure to add picture of sweater here.
+Which is a perfectly knittable bit of pattern.  So I knit it up, and it worked perfectly!
+
+
+.. figure:: Pycon2021-Slides/pyKnit-PyCon2021-21a.png
+
+   Picture of Terri wearing actual sweater knit using these sleeve decreases. You can see that sleeves are indeed "bracelet length" and do not cover her fitness tracker.
 
 22. pyKnit wishlist
 -------------------
