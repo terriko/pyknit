@@ -1,6 +1,6 @@
 # pyKnit
 
-![pyKnit](pyknit-logolong.png)
+![pyKnit](https://raw.githubusercontent.com/terriko/pyknit/main/pyknit-logolong.png)
 
 A set of tools for knitters to do math, create charts, and eventually more.
 
