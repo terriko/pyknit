@@ -29,8 +29,16 @@ stitch_legend = {
         "symbol": "/",
         "width": 1,
     },
-    # "p": ".",
-    # "ssk": "\\",
+    "p": {
+        "instruction": "p",  # instruction?
+        "symbol": ".",
+        "width": 1,
+    },
+    "ssk": {
+        "instruction": "ssk",  # instruction?
+        "symbol": "\\",
+        "width": 1,
+    },
 }
 
 class Stitch:
@@ -45,14 +53,15 @@ class Stitch:
         self.width = stitch_info["width"]
 
     def __repr__(self):
-        return f"{self.instruction}"
+        return f"'{self.symbol}'"
 
-        
+    def __str__(self):
+        return f"{self.instruction}"
 
 ## Chart and pattern parsing functions
 
 
-def parse_written(row: str, legend: Set[str]) -> Set[str]:
+def parse_written(row: str, legend: Set[str]=stitch_legend) -> Set[str]:
     """Parse a written set of knitting instructions and print an array of
     stitches using a legend.  This is a stand in for eventually printing a
     chart."""
@@ -76,7 +85,7 @@ def parse_written(row: str, legend: Set[str]) -> Set[str]:
                 number = int(result.group(2)) if result.group(2) else 1
                 for i in range(0, number):
                     if stitch in legend:
-                        stitch_array.append(legend[stitch])
+                        stitch_array.append(Stitch(stitch))
                     else:
                         stitch_array.append(stitch)
                         print(f"Error: Stitch {stitch} is not found in legend")
