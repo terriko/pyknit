@@ -65,8 +65,11 @@ def print_chart(stitch_array: Set[str]) -> Image:
         draw.line(
             ((cell_width + 1) * i, 0) + ((cell_width + 1) * i, cell_height), fill=128
         )
-    return chart_image
 
     # draw symbol for each cell
-    fnt = ImageFont.truetype("Pillow/Tests/fonts/FreeMono.ttf", 40)
-    draw.text((10, 10), "HI", font=fnt, fill=(255, 255, 255, 255))
+    fnt = ImageFont.truetype("Courier New.ttf", 40)
+    for i, stitch in enumerate(stitch_array):
+        draw.text(
+            ((cell_width + 1) * i, 3), stitch, font=fnt, fill=(255, 255, 255, 255)
+        )
+    return chart_image
