@@ -35,7 +35,7 @@ stitch_legend = {  # Default legend. Incomplete for now.
         "width": 1,
     },
     "p": {
-        "instruction": "p",  # instruction?
+        "instruction": "purl", 
         "symbol": ".",
         "width": 1,
     },
