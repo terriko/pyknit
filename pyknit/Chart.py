@@ -13,11 +13,67 @@ import re
 from PIL import Image, ImageDraw, ImageFont
 from typing import Set
 
+stitch_legend = {  # Default legend. Incomplete for now.
+    "k": {
+        "instruction": "knit",
+        "symbol": " ",
+        "width": 1,  
+    },
+    "kfb": {
+        "instruction": "knit front and back",
+        "symbol": "V",
+        "width": 1,
+    },
+    "k2tog": {
+        "instruction": "knit two together",
+        "symbol": "/",
+        "width": 1,
+    },
+    "yo": {
+        "instruction": "yarn over",
+        "symbol": "O",
+        "width": 1
+    },
+    "p": {
+        "instruction": "purl", 
+        "symbol": ".",
+        "width": 1,
+    },
+    "ssk": {
+        "instruction": "slip slip knit", # left-leaning decrease 
+        "symbol": "\\",
+        "width": 1,
+    },
+}
+
+class Stitch:
+    """A class to represent a stitch. Optionally, a preferred legend can be passed in."""
+    def __init__(self, stitch_name: str, legend: Set[str]=stitch_legend):
+        if stitch_name not in legend:
+            raise KeyError(f"Stitch '{stitch_name}' not found in legend.")
+
+        stitch_info = legend[stitch_name]
+
+        self.instruction = stitch_info["instruction"]
+        self.symbol = stitch_info["symbol"]
+        self.width = stitch_info["width"]
+
+    def __repr__(self):
+        return f"'{self.symbol}'"
+
+    def __str__(self):
+        return f"{self.instruction}"
+
+    def __eq__(self, other):
+        if isinstance(other, Stitch):
+            return self.__dict__ == other.__dict__
+        return False
+            
 
 ## Chart and pattern parsing functions
 
 
-def parse_written(row: str, legend: Set[str]) -> Set[str]:
+def parse_written(row: str, legend: Set[str]=stitch_legend) -> Set[str]:
     """Parse a written set of knitting instructions and print an array of
     stitches using a legend.  This is a stand in for eventually printing a
     chart."""
@@ -40,11 +96,7 @@ def parse_written(row: str, legend: Set[str]) -> Set[str]:
                 # set the number or if no number, assume you repeat once
                 number = int(result.group(2)) if result.group(2) else 1
                 for i in range(0, number):
-                    if stitch in legend:
-                        stitch_array.append(legend[stitch])
-                    else:
-                        stitch_array.append(stitch)
-                        print(f"Error: Stitch {stitch} is not found in legend")
+                    stitch_array.append(Stitch(stitch, legend))
 
     return stitch_array
 
@@ -65,8 +117,11 @@ def print_chart(stitch_array: Set[str]) -> Image:
         draw.line(
             ((cell_width + 1) * i, 0) + ((cell_width + 1) * i, cell_height), fill=128
         )
-    return chart_image
 
     # draw symbol for each cell
-    fnt = ImageFont.truetype("Pillow/Tests/fonts/FreeMono.ttf", 40)
-    draw.text((10, 10), "HI", font=fnt, fill=(255, 255, 255, 255))
+    fnt = ImageFont.truetype("Courier New.ttf", 40)
+    for i, stitch in enumerate(stitch_array):
+        draw.text(
+            ((cell_width + 1) * i, 3), stitch.symbol, font=fnt, fill=(255, 255, 255, 255)
+        )
+    return chart_image
