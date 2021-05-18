@@ -35,12 +35,12 @@ stitch_legend = {  # Default legend. Incomplete for now.
         "width": 1,
     },
     "p": {
-        "instruction": "p",  # instruction?
+        "instruction": "purl", 
         "symbol": ".",
         "width": 1,
     },
     "ssk": {
-        "instruction": "ssk",  # instruction?
+        "instruction": "slip slip knit", # left-leaning decrease 
         "symbol": "\\",
         "width": 1,
     },
