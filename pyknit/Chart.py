@@ -40,7 +40,7 @@ stitch_legend = {  # Default legend. Incomplete for now.
         "width": 1,
     },
     "ssk": {
-        "instruction": "ssk",  # instruction?
+        "instruction": "slip slip knit", # left-leaning decrease 
         "symbol": "\\",
         "width": 1,
     },
