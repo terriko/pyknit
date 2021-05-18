@@ -46,6 +46,6 @@ jobs:
         pip install -r documentation/requirements.txt
     - name: Build docs
       run: |
-        cd documenation/
+        cd documentation/
         make html
     
