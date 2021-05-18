@@ -29,10 +29,10 @@ stitch_legend = {  # Default legend. Incomplete for now.
         "symbol": "/",
         "width": 1,
     },
-    "r": {
-        "instruction": "r",  # instruction?
-        "symbol": "r",  # symbol?
-        "width": 1,
+    "yo": {
+        "instruction": "yarn over",
+        "symbol": "O",
+        "width": 1
     },
     "p": {
         "instruction": "purl", 
@@ -63,6 +63,12 @@ class Stitch:
 
     def __str__(self):
         return f"{self.instruction}"
+
+    def __eq__(self, other):
+        if isinstance(other, Stitch):
+            return self.__dict__ == other.__dict__
+        return False
+            
 
 ## Chart and pattern parsing functions
 
