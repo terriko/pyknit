@@ -7,23 +7,26 @@ A set of tools for knitters to do math, create charts, and eventually more.
 ![pyknit](https://github.com/terriko/pyknit/workflows/pyknit/badge.svg?branch=main&event=push)
 [![On PyPI](https://img.shields.io/pypi/v/pyknit)](https://pypi.org/project/pyknit/)
 
-## Command Line Usage
+## Installing pyKnit
 
-If you don't care about charts (and let's be honest, most of those functions aren't working yet so you probably don't) you can use pyknit from the command line.
+```
+pip install pyknit
+```
 
-`pip install pyknit`
+If you want to use the latest and greatest [grab pyknit from github](https://github.com/terriko/pyknit) and use `pip install -e` to install it in ["editable" mode](https://pip.pypa.io/en/stable/cli/pip_install/#install-editable).
 
-or if you want to use the latest and greatest [grab pyknit from github](https://github.com/terriko/pyknit) and run `python` in that directory so you can `import pyknit` and have it work.
+```
+git clone https://github.com/terriko/pyknit
+pip install -e pyknit/
+```
 
-[Here's an example of how to calculate sweater sleeve decreases using pyknit](https://github.com/terriko/pyknit/blob/main/documentation/SleeveDecreases.md) to get you started.  If you want to write more examples, that would be awesome!
+Note that when you're doing `pip install -e pyknit/` here that `pyknit/` refers to the directory.  (You don't really need the slash but it makes that more clear.) If you get an error about not being able to find `setup.py` you're probably giving it the wrong directory (and may need to `cd ..` to go up one directory).
 
-
-## Jupyter-lab Usage 
+## Jupyter-lab Usage
 
 pyKnit works best in conjunction with [Jupyter](https://jupyter.org/install).
 This allows you to "mess around" with the functions and see the results in your
 browser.  I like this especially for the ability to display the charts inline.
-
 
 Make sure you install Jupyter and pyknit in the same place (e.g. in the same
 virtualenv if you're using one) so that you can use `import pyknit` and have it
@@ -39,6 +42,8 @@ pip install jupyterlab
 pip install pyknit
 jupyter-lab
 ```
+***Developers may prefer to [get pyknit from github](https://github.com/terriko/pyknit) and use `pip install -e $pyknit_directory` in lieu of `pip install pyknit`  Remember to restart the notebook kernel to get any changes you've made in the pyknit directory while you're editing the code!***
+
 
 From there, jupyter lab will open in a browser, and you can create a new notebook to play around.  When you're done, you can shut down the notebook server using `^C` in the console and typing `y` when it asks if you want to shut down.  You can deactivate the virtualenv by typing `deactivate` and pressing enter.
 
@@ -51,13 +56,14 @@ jupyter-lab
 
 (The virtualenv only needs to be created once, and you don't need to reinstall.)
 
-If you don't want to use Jupyter, it will also work as any standard python library.
+## Using PyKnit
 
-`pip install pyknit`
+[Here's an example of how to calculate sweater sleeve decreases using pyknit](https://github.com/terriko/pyknit/blob/main/documentation/SleeveDecreases.md) to get you started.
 
-And then go ahead and import it into your Python program.  There's also a
-minimal command line interface which could be expanded if anyone actually wants
-to use it.
+For those using Jupyter, there are also several full interactive notebooks available:
+
+* [Sweater Sleeve Decreases](https://github.com/terriko/pyknit/blob/main/documentation/SleeveDecreases.ipynb)
+* [Triangle Hat interactive hat pattern](https://github.com/terriko/pyknit/blob/main/documentation/TriangleHat.ipynb)
 
 ## Why pyKnit?
 
