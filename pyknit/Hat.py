@@ -24,7 +24,11 @@ class Hat:
 
         while current_stitches - repeats > 0:
             current_stitches = current_stitches - repeats
-            instructions.append(f"k{int(count_per_repeat)}, k2tog, ({current_stitches} stitches)")
+            if count_per_repeat - 2 > 0:
+                instructions.append(f"[k{int(count_per_repeat-2)}, k2tog] repeat {repeats} times ({current_stitches} stitches)")
+            else:
+                instructions.append(f"k2tog {repeats} times ({current_stitches} stitches)")
+
             instructions.append(f"Knit 1 round") 
             count_per_repeat = count_per_repeat - 1
         instructions.append("Cut yarn leaving 4 inch tail, thread through remaining stitches and pull closed")
