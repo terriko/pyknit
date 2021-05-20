@@ -39,7 +39,7 @@ class GaugeSwatch:
         """ return stitches per unit (e.g. cm, inch) number """
         return self.stitch_count / self.stitch_measure
 
-    def measurement_to_stiches(self, measurement: float) -> int:
+    def measurement_to_stitches(self, measurement: float) -> int:
         """
         Given a measurement, how many stiches would we need?
         Round to closest stitch.
