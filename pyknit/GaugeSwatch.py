@@ -10,8 +10,9 @@ pyKnit.GaugeSwatch: Tools for measurement and gauge swatching
 """
 
 import math
-from typing import Set, Literal
+from typing import Set
 from pydantic import BaseModel, PositiveInt, PositiveFloat, validate_arguments
+from pydantic.typing import Literal
 
 
 class GaugeSwatch(BaseModel):
