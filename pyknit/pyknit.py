@@ -11,15 +11,16 @@ import argparse
 import math
 from typing import Set
 from pyknit import GaugeSwatch, Chart
+from pydantic import validate_arguments, PositiveInt
 
 VERSION = "pyKnit 0.0.3"
 
 
 # Increase and decrease functions
 
-
+@validate_arguments
 def increase_evenly(
-    starting_count: int, increase_number: int, in_the_round: bool = False
+    starting_count: PositiveInt, increase_number: PositiveInt, in_the_round: bool = False
 ) -> str:
     """ A function to figure out even spacing for increases """
 
@@ -63,16 +64,16 @@ def increase_evenly(
 
 
 def decrease_evenly(
-    starting_count: int, decrease_number: int, in_the_round: bool = False
+    starting_count: PositiveInt, decrease_number: PositiveInt, in_the_round: bool = False
 ):
     """ A function to figure out spacing for decreases """
 
 
 def sleeve_decreases(
-    number_of_rows: int,
-    starting_count: int,
-    ending_count: int,
-    decrease_per_row: int = 2,
+    number_of_rows: PositiveInt,
+    starting_count: PositiveInt,
+    ending_count: PositiveInt,
+    decrease_per_row: PositiveInt = 2,
 ) -> str:
     """ A function to figure out a nice even sleeve decrease. """
 
@@ -118,12 +119,12 @@ def sleeve_decreases(
 
 
 def raglan_increases(
-    neck_stitches: int,
-    arm_stitches: int,
-    bust_stitches: int,
-    neck_to_bust_rows: int,
-    increase_per_increase_row: int = 8,
-    armpit_stitches: int = 4,
+    neck_stitches: PositiveInt,
+    arm_stitches: PositiveInt,
+    bust_stitches: PositiveInt,
+    neck_to_bust_rows: PositiveInt,
+    increase_per_increase_row: PositiveInt = 8,
+    armpit_stitches: PositiveInt = 4,
 ) -> str:
     """Tool for adjusting raglan sweaters to increase arm size or bust size.
 
