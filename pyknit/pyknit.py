@@ -23,6 +23,11 @@ def increase_evenly(
 ) -> str:
     """ A function to figure out even spacing for increases """
 
+    if increase_number > starting_count :
+        print(
+            f"Error: Increase number ({increase_number}) is bigger than the starting count ({starting_count})"
+        )
+
     if not in_the_round:
         # It's increase+1 so that you don't have increases at either
         # the start or end of a row
@@ -66,6 +71,10 @@ def decrease_evenly(
     starting_count: int, decrease_number: int, in_the_round: bool = False
 ):
     """ A function to figure out spacing for decreases """
+    if decrease_number > starting_count :
+        print(
+            f"Error: Decrease number ({decrease_number}) is bigger than the starting count ({starting_count})"
+        )
 
 
 def sleeve_decreases(
@@ -79,9 +88,13 @@ def sleeve_decreases(
     # TODO: This function is going to be pretty similar to the decrease_evenly()
     # function.  We may want to combine them later.
 
-    if starting_count <= ending_count:
+    if starting_count < ending_count:
         print(
             f"Error: No decreases needed, {starting_count} is already smaller than {ending_count}"
+        )
+    elif starting_count == ending_count:
+        print(
+            f"Error: No decreases needed, the starting count is the same as the ending count"
         )
 
     # How many times are we doing the decrease row?
@@ -196,7 +209,7 @@ def main():
         "p2tog": "p2tog",
     }
 
-    print(parse_written(args.instruction_row, legend))
+    print(pyknit.parse_written(args.instruction_row, legend))
 
 
 if __name__ == "__main__":
