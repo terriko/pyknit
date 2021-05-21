@@ -210,7 +210,7 @@ def main():
         "p2tog": "p2tog",
     }
 
-    print(pyknit.parse_written(args.instruction_row, legend))
+    print(parse_written(args.instruction_row, legend))
 
 
 if __name__ == "__main__":
