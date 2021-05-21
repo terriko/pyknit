@@ -13,7 +13,7 @@ from typing import Set
 from pyknit import GaugeSwatch, Chart
 from pydantic import validate_arguments, PositiveInt
 
-VERSION = "pyKnit 0.0.3"
+VERSION = "pyKnit 0.0.5a"
 
 
 # Increase and decrease functions
