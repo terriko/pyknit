@@ -25,7 +25,7 @@ def pi_shawl_increase_rows(desired_radius: float, round_gauge: float) -> str:
 def main():
     parser = argparse.ArgumentParser(description="Pi shawl calculations")
     parser.add_argument("desired_radius", type=float, help="Radius of your pi shawl")
-    parser.add_argument("round_gauge", type=float, help="TODO")
+    parser.add_argument("round_gauge", type=float, help="Rows per measurement unit")
     args = parser.parse_args()
     print(pi_shawl_increase_rows(args.desired_radius, args.round_gauge))
 
