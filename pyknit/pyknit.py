@@ -168,17 +168,17 @@ def raglan_increases(
     if calculated_neck < neck_stitches:
         # you don't need to increase every row in the raglan section
         # We'll put the non-increase rows at the end before the armpit section
-        no_increase_rows = 555 # FIXME
+        no_increase_rows = 555  # FIXME
 
     # generate some standard raglan instructions
     # we're assuming the beginning of row is the middle of the back here
-    body_start = bust_stitches/2 - neck_to_bust_rows*2 - armpit_stitches
+    body_start = bust_stitches / 2 - neck_to_bust_rows * 2 - armpit_stitches
 
     # in case our count is uneven
     front = math.ceil(body_start)
     back = math.floor(body_start)
 
-    arm = arm_stitches - armpit_stitches - neck_to_bust_rows*2
+    arm = arm_stitches - armpit_stitches - neck_to_bust_rows * 2
 
     instruction_string += f"Marker setup: k{math.floor(back/2)}, pm, k{arm} (arm), pm, "
     instruction_string += f"k{front}, pm, k{arm} (arm), pm k{math.ceil(back/2)}"
@@ -197,8 +197,7 @@ def main():
     """
     parser = argparse.ArgumentParser(description=desc)
     parser.add_argument(
-        "instruction_row",
-        help="A row of knitting instructions. e.g. 'k2 p4'",
+        "instruction_row", help="A row of knitting instructions. e.g. 'k2 p4'",
     )
     args = parser.parse_args()
     legend = {
