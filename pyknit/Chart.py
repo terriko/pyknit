@@ -82,8 +82,8 @@ def parse_written(row: str, legend: Set[str]=stitch_legend) -> Set[str]:
     for section in row.split(" "):
 
         patterns = [
-            r"([a-z]+[0-9]+[a-z]+)([0-9]*)",  # things like k2tog or m1l
-            r"([a-z]+)([0-9]*)",  # things like p4
+            r"([A-Za-z]+[0-9]+[A-Za-z]+)([0-9]*)",  # things like k2tog or m1l
+            r"([A-Za-z]+)([0-9]*)",  # things like p4
         ]
         matched_stitch = False
         for pat in patterns:
@@ -119,7 +119,7 @@ def print_chart(stitch_array: Set[str]) -> Image:
         )
 
     # draw symbol for each cell
-    fnt = ImageFont.truetype("Courier New.ttf", 40)
+    fnt = ImageFont.truetype("arial.ttf", 40)
     for i, stitch in enumerate(stitch_array):
         draw.text(
             ((cell_width + 1) * i, 3), stitch.symbol, font=fnt, fill=(255, 255, 255, 255)
