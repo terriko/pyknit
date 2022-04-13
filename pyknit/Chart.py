@@ -103,7 +103,8 @@ def parse_written(row: str, legend: Set[str]=stitch_legend) -> Set[str]:
 
 def print_chart(stitch_array: Set[str]) -> Image:
     """ Print a chart from a stitch array """
-
+    # TODO make the cells the right width for the stitch
+    # TODO do a 2D chart
     # Set up the image
     cell_height = 50
     cell_width = 50
@@ -119,7 +120,7 @@ def print_chart(stitch_array: Set[str]) -> Image:
         )
 
     # draw symbol for each cell
-    fnt = ImageFont.truetype("arial.ttf", 40)
+    fnt = ImageFont.truetype("cour.ttf", 40)
     for i, stitch in enumerate(stitch_array):
         draw.text(
             ((cell_width + 1) * i, 3), stitch.symbol, font=fnt, fill=(255, 255, 255, 255)
