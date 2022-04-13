@@ -10,6 +10,7 @@ pyKnit.Chart: chart and pattern parsing functions
 """
 
 import re
+from turtle import position
 from PIL import Image, ImageDraw, ImageFont
 from typing import Set
 
@@ -109,20 +110,29 @@ def print_chart(stitch_array: Set[str]) -> Image:
     cell_height = 50
     cell_width = 50
     chart_image = Image.new(
-        "RGB", ((cell_width + 1) * len(stitch_array), cell_height), (200, 200, 200)
+        "RGB", ((cell_width + 1) * sum(st.width for st in stitch_array), cell_height), (200, 200, 200)
     )
 
     # draw some gridlines
     draw = ImageDraw.Draw(chart_image)
-    for i in range(1, len(stitch_array)):
-        draw.line(
-            ((cell_width + 1) * i, 0) + ((cell_width + 1) * i, cell_height), fill=128
-        )
 
     # draw symbol for each cell
     fnt = ImageFont.truetype("cour.ttf", 40)
+    position = 0
     for i, stitch in enumerate(stitch_array):
+
+    # for i in range(1, len(stitch_array)):
+        position = sum(st.width for st in stitch_array[:i+1]) * (cell_width + 1)
+        draw.line(
+            (position, 0) + (position, cell_height), fill=128
+        )
+
+    
         draw.text(
-            ((cell_width + 1) * i, 3), stitch.symbol, font=fnt, fill=(255, 255, 255, 255)
+            (position - (stitch.width * cell_width)/2, cell_height/2),
+            stitch.symbol, font=fnt,
+            fill=(255, 255, 255, 255),
+            align="center",
+            anchor="mm"
         )
     return chart_image
