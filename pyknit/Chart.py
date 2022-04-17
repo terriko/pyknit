@@ -174,26 +174,28 @@ def plot_chart(stitch_array: List[List[str]], lr_direction:str="lr", tb_directio
 
     # draw symbol for each cell
     fnt = ImageFont.truetype("cour.ttf", 35)
+    color_st_pattern = r"#[0-9a-fA-F]{6}"
 
     for st_y, row in enumerate(sts_to_plot):
         cur_y = st_y * cell_height
         cur_x = 0
         for st_x, stitch in enumerate(row):
         # for i in range(1, len(stitch_array)):
+            stitch_coloured = re.match(color_st_pattern, stitch.symbol)
+            stitch_color = stitch.symbol if stitch_coloured else "white"
             draw.rectangle(
                 ((cur_x, cur_y), (cur_x+stitch.width*cell_width, cur_y+cell_height)),
-                fill="white",
+                fill=stitch_color,
                 outline="black"
             )
-
-        
-            draw.text(
-                (cur_x + (stitch.width * cell_width)/2, cur_y + cell_height/2),
-                stitch.symbol, font=fnt,
-                fill="blue",
-                align="center",
-                anchor="mm"
-            )
+            if not stitch_coloured:
+                draw.text(
+                    (cur_x + (stitch.width * cell_width)/2, cur_y + cell_height/2),
+                    stitch.symbol, font=fnt,
+                    fill="blue",
+                    align="center",
+                    anchor="mm"
+                )
             cur_x +=stitch.width*cell_width
 
     return chart_image
