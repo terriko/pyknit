@@ -7,7 +7,7 @@ import pytest
 import pyknit
 
 
-def test_parse_written():
+def test_parse_row():
     """Test parse_written's ability to convert a string of stitches 
     into an array of Stitch objects. The built-in stitch_legend dict is used
     as the legend."""
@@ -29,7 +29,7 @@ def test_parse_written():
         pyknit.Chart.Stitch("ssk"),
         pyknit.Chart.Stitch("k2tog"),
     ]
-    output_array = pyknit.Chart.parse_written(stitchstring, pyknit.Chart.stitch_legend)
+    output_array = pyknit.Chart.parse_row(stitchstring, pyknit.Chart.stitch_legend)
     assert output_array == expected
 
 def test_Stitch_unknown_stitch():
