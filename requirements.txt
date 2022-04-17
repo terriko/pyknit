@@ -1,3 +1,6 @@
+black
+flake8
+Pillow
+pre-commit
 pydantic
 pytest
-Pillow
