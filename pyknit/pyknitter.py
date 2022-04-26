@@ -8,6 +8,7 @@ patterns and more
 """
 
 import argparse
+import logging
 import math
 from logging.config import dictConfig
 from typing import Set
@@ -27,7 +28,7 @@ def increase_evenly(
     """ A function to figure out even spacing for increases """
 
     if increase_number > starting_count :
-        print(
+        logging.warning(
             f"Error: Increase number ({increase_number}) is bigger than the starting count ({starting_count})"
         )
 
@@ -75,7 +76,7 @@ def decrease_evenly(
 ):
     """ A function to figure out spacing for decreases """
     if decrease_number > starting_count :
-        print(
+        logging.warning(
             f"Error: Decrease number ({decrease_number}) is bigger than the starting count ({starting_count})"
         )
 
@@ -92,11 +93,11 @@ def sleeve_decreases(
     # function.  We may want to combine them later.
 
     if starting_count < ending_count:
-        print(
+        logging.warning(
             f"Error: No decreases needed, {starting_count} is already smaller than {ending_count}"
         )
     elif starting_count == ending_count:
-        print(
+        logging.warning(
             f"Error: No decreases needed, the starting count is the same as the ending count"
         )
 
@@ -106,10 +107,10 @@ def sleeve_decreases(
     )
     if ((starting_count - ending_count) % decrease_per_row) > 0:
         # TODO: we could probably do this math for people if we wanted
-        print(
+        logging.warning(
             f"Warning: desired decrease doesn't work exactly with a {decrease_per_row} decrease"
         )
-        print(
+        logging.warning(
             "Printing the closest alternative but you'll need to add decreases at the end"
         )
 
@@ -189,7 +190,7 @@ def raglan_increases(
 
 
 def main():
-    print(VERSION)
+    logging.info(f"VERSION = {VERSION}")
     desc = """
     This package is intended for use as a library inside jupyter notebook,
     so that you can see charts as they're parsed.
