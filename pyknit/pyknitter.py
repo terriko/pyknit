@@ -9,9 +9,11 @@ patterns and more
 
 import argparse
 import math
+from logging.config import dictConfig
 from typing import Set
-from pyknit import GaugeSwatch, Chart
 from pydantic import validate_arguments, PositiveInt
+
+from pyknit import logging_config_dict, parse_written
 
 VERSION = "pyKnit 0.0.5a"
 
@@ -213,4 +215,5 @@ def main():
 
 
 if __name__ == "__main__":
+    dictConfig(logging_config_dict)
     main()
