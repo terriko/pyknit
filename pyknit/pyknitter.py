@@ -27,10 +27,10 @@ def increase_evenly(
 ) -> str:
     """ A function to figure out even spacing for increases """
 
-    if increase_number > starting_count :
-        logging.warning(
-            f"Error: Increase number ({increase_number}) is bigger than the starting count ({starting_count})"
-        )
+    if increase_number > starting_count:
+        logging.error(
+            f"Error: Increase number ({increase_number}) is bigger than the starting count ({starting_count})")
+        raise ValueError
 
     if not in_the_round:
         # It's increase+1 so that you don't have increases at either
@@ -75,10 +75,11 @@ def decrease_evenly(
     starting_count: PositiveInt, decrease_number: PositiveInt, in_the_round: bool = False
 ):
     """ A function to figure out spacing for decreases """
-    if decrease_number > starting_count :
-        logging.warning(
+    if decrease_number > starting_count:
+        logging.error(
             f"Error: Decrease number ({decrease_number}) is bigger than the starting count ({starting_count})"
         )
+        raise ValueError
 
 
 def sleeve_decreases(
@@ -93,13 +94,15 @@ def sleeve_decreases(
     # function.  We may want to combine them later.
 
     if starting_count < ending_count:
-        logging.warning(
+        logging.error(
             f"Error: No decreases needed, {starting_count} is already smaller than {ending_count}"
         )
+        raise ValueError
     elif starting_count == ending_count:
-        logging.warning(
+        logging.error(
             f"Error: No decreases needed, the starting count is the same as the ending count"
         )
+        raise ValueError
 
     # How many times are we doing the decrease row?
     number_of_decrease_rows = math.floor(
