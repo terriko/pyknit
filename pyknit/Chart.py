@@ -40,6 +40,11 @@ Legend = Dict[str, Stitch]
 PatternRow = List[Stitch]
 Pattern = List[PatternRow]
 
+symbol_dir = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)),
+    "symbols",
+)
+
 stitch_legend = {  # Default legend. Incomplete for now.
     "k": Stitch(instruction="knit", symbol=" ", width=1),
     "kfb": Stitch(
@@ -63,6 +68,46 @@ stitch_legend = {  # Default legend. Incomplete for now.
         symbol="\\",
         width=1,
     ),
+    "C1-1L": Stitch(
+        instruction="sl 1st onto cn, with cn in front, k1, k1 from cn",
+        symbol=os.path.join(symbol_dir, "C1-1L.png"),
+        width=2,
+    ),
+    "C1-1R": Stitch(
+        instruction="sl 1st onto cn, with cn in back, k1, k1 from cn",
+        symbol=os.path.join(symbol_dir, "C1-1R.png"),
+        width=2,
+    ),
+    "C2-1L": Stitch(
+        instruction="sl 2st onto cn, with cn in front, k1, k2 from cn",
+        symbol=os.path.join(symbol_dir, "C2-1L.png"),
+        width=3,
+    ),
+    "C2-1R": Stitch(
+        instruction="sl 2st onto cn, with cn in back, k1, k2 from cn",
+        symbol=os.path.join(symbol_dir, "C2-1R.png"),
+        width=3,
+    ),
+    "C2-1PL": Stitch(
+        instruction="sl 2st onto cn, with cn in front, p1, k2 from cn",
+        symbol=os.path.join(symbol_dir, "C2-1PL.png"),
+        width=3,
+    ),
+    "C2-1PR": Stitch(
+        instruction="sl 2st onto cn, with cn in back, p1, k2 from cn",
+        symbol=os.path.join(symbol_dir, "C2-1PR.png"),
+        width=3,
+    ),
+    "C2-2L": Stitch(
+        instruction="sl 2st onto cn, with cn in front, k2, k2 from cn",
+        symbol=os.path.join(symbol_dir, "C2-2L.png"),
+        width=4,
+    ),
+    "C2-2R": Stitch(
+        instruction="sl 2st onto cn, with cn in back, k2, k2 from cn",
+        symbol=os.path.join(symbol_dir, "C2-2R.png"),
+        width=4,
+    ),
 }
 ## Chart and pattern parsing functions
 
@@ -77,6 +122,7 @@ def parse_row(row: str, legend: Legend = stitch_legend) -> List[str]:
     for section in row.split(" "):
 
         patterns = [
+            r"(C\d-\dP?[F|B|L|R])([0-9]*)",  # cables
             r"([A-Za-z]+[0-9]+[A-Za-z]+)([0-9]*)",  # things like k2tog or m1l
             r"([A-Za-z]+)([0-9]*)",  # things like p4
         ]
@@ -194,16 +240,10 @@ def plot_chart(
             stitch_coloured = re.match(color_st_pattern, stitch.symbol)
             stitch_graphic = stitch.symbol.endswith(".png")
 
-            if stitch_graphic:
-                with Image.open(
-                    os.path.normpath(
-                        os.path.join(
-                            os.path.dirname(os.path.abspath(__file__)),
-                            "symbols",
-                            stitch.symbol,
-                        )
-                    )
-                ) as sym:
+            if (
+                stitch_graphic
+            ):  # this is really ugly, fix path to symbols as part of the symbol name?
+                with Image.open(stitch.symbol) as sym:
                     chart_image.paste(sym, (cur_x, cur_y))
 
             else:

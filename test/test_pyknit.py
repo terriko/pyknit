@@ -8,35 +8,43 @@ import pyknit
 
 
 def test_parse_row():
-    """Test parse_written's ability to convert a string of stitches 
+    """Test parse_written's ability to convert a string of stitches
     into an array of Stitch objects. The built-in stitch_legend dict is used
     as the legend."""
     stitchstring = "k1 p4 k1 p4 k kfb yo ssk k2tog"
     expected = [
-        pyknit.Chart.Stitch("k"),
-        pyknit.Chart.Stitch("p"),
-        pyknit.Chart.Stitch("p"),
-        pyknit.Chart.Stitch("p"),
-        pyknit.Chart.Stitch("p"),
-        pyknit.Chart.Stitch("k"),
-        pyknit.Chart.Stitch("p"),
-        pyknit.Chart.Stitch("p"),
-        pyknit.Chart.Stitch("p"),
-        pyknit.Chart.Stitch("p"),
-        pyknit.Chart.Stitch("k"),
-        pyknit.Chart.Stitch("kfb"),
-        pyknit.Chart.Stitch("yo"),
-        pyknit.Chart.Stitch("ssk"),
-        pyknit.Chart.Stitch("k2tog"),
+        pyknit.Chart.Stitch("knit", symbol=" ", width=1),
+        pyknit.Chart.Stitch("purl", symbol=".", width=1),
+        pyknit.Chart.Stitch("purl", symbol=".", width=1),
+        pyknit.Chart.Stitch("purl", symbol=".", width=1),
+        pyknit.Chart.Stitch("purl", symbol=".", width=1),
+        pyknit.Chart.Stitch("knit", symbol=" ", width=1),
+        pyknit.Chart.Stitch("purl", symbol=".", width=1),
+        pyknit.Chart.Stitch("purl", symbol=".", width=1),
+        pyknit.Chart.Stitch("purl", symbol=".", width=1),
+        pyknit.Chart.Stitch("purl", symbol=".", width=1),
+        pyknit.Chart.Stitch("knit", symbol=" ", width=1),
+        pyknit.Chart.Stitch(
+            "knit front and back",
+            symbol="V",
+            width=1,
+        ),
+        pyknit.Chart.Stitch("yarn over", symbol="O", width=1),
+        pyknit.Chart.Stitch(
+            "slip slip knit", symbol="\\", width=1  # left-leaning decrease
+        ),
+        pyknit.Chart.Stitch("knit two together", symbol="/", width=1),
     ]
     output_array = pyknit.Chart.parse_row(stitchstring, pyknit.Chart.stitch_legend)
     assert output_array == expected
+
 
 def test_Stitch_unknown_stitch():
     """A stitch in the string that is not found in the legend should raise
     a KeyError: 'Stitch not found in legend.'"""
     with pytest.raises(KeyError):
-        bad_stitch = pyknit.Chart.Stitch("r")
+        bad_stitch = pyknit.Chart.stitch_legend["r"]
+
 
 @pytest.mark.parametrize(
     ("starting_count", "increase_number", "in_the_round", "expected"),
