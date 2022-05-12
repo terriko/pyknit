@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 
 #!python
+import logging
 
 import pytest
 import pyknit
@@ -62,3 +63,20 @@ def test_increase_evenly(starting_count, increase_number, in_the_round, expected
         pyknit.increase_evenly(starting_count, increase_number, in_the_round)
         == expected
     )
+
+
+@pytest.mark.parametrize(
+    ("starting_count", "increase_number", "in_the_round", "expected"),
+    [
+        (3, 11, False, ValueError),
+        (7, 10, False, ValueError),
+        (3, 11, True, ValueError),
+        (5, 20, True, ValueError),
+        (5, 21, True, ValueError),
+        (5, 19, True, ValueError),
+    ],
+)
+def test_increase_evenly_error(starting_count, increase_number, in_the_round, expected):
+    with pytest.raises(expected):
+        logging.info(f"this should raise a valueError")
+        pyknit.increase_evenly(starting_count, increase_number, in_the_round)

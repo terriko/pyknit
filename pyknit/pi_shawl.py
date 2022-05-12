@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 import argparse
+from logging.config import dictConfig
+
+from pyknit import logging_config_dict
 
 
 def total_rounds_for_pi_shawl(desired_radius: float, round_gauge: float) -> int:
@@ -31,4 +34,5 @@ def main():
 
 
 if __name__ == "__main__":
+    dictConfig(logging_config_dict)
     main()

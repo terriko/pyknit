@@ -8,10 +8,13 @@ patterns and more
 """
 
 import argparse
+import logging
 import math
+from logging.config import dictConfig
 from typing import Set
-from pyknit import GaugeSwatch, Chart
 from pydantic import validate_arguments, PositiveInt
+
+from pyknit import logging_config_dict, parse_written
 
 VERSION = "pyKnit 0.0.5a"
 
@@ -24,10 +27,10 @@ def increase_evenly(
 ) -> str:
     """ A function to figure out even spacing for increases """
 
-    if increase_number > starting_count :
-        print(
-            f"Error: Increase number ({increase_number}) is bigger than the starting count ({starting_count})"
-        )
+    if increase_number > starting_count:
+        logging.error(
+            f"Error: Increase number ({increase_number}) is bigger than the starting count ({starting_count})")
+        raise ValueError
 
     if not in_the_round:
         # It's increase+1 so that you don't have increases at either
@@ -72,10 +75,11 @@ def decrease_evenly(
     starting_count: PositiveInt, decrease_number: PositiveInt, in_the_round: bool = False
 ):
     """ A function to figure out spacing for decreases """
-    if decrease_number > starting_count :
-        print(
+    if decrease_number > starting_count:
+        logging.error(
             f"Error: Decrease number ({decrease_number}) is bigger than the starting count ({starting_count})"
         )
+        raise ValueError
 
 
 def sleeve_decreases(
@@ -90,13 +94,15 @@ def sleeve_decreases(
     # function.  We may want to combine them later.
 
     if starting_count < ending_count:
-        print(
+        logging.error(
             f"Error: No decreases needed, {starting_count} is already smaller than {ending_count}"
         )
+        raise ValueError
     elif starting_count == ending_count:
-        print(
+        logging.error(
             f"Error: No decreases needed, the starting count is the same as the ending count"
         )
+        raise ValueError
 
     # How many times are we doing the decrease row?
     number_of_decrease_rows = math.floor(
@@ -104,10 +110,10 @@ def sleeve_decreases(
     )
     if ((starting_count - ending_count) % decrease_per_row) > 0:
         # TODO: we could probably do this math for people if we wanted
-        print(
+        logging.warning(
             f"Warning: desired decrease doesn't work exactly with a {decrease_per_row} decrease"
         )
-        print(
+        logging.warning(
             "Printing the closest alternative but you'll need to add decreases at the end"
         )
 
@@ -187,7 +193,7 @@ def raglan_increases(
 
 
 def main():
-    print(VERSION)
+    logging.info(f"VERSION = {VERSION}")
     desc = """
     This package is intended for use as a library inside jupyter notebook,
     so that you can see charts as they're parsed.
@@ -213,4 +219,5 @@ def main():
 
 
 if __name__ == "__main__":
+    dictConfig(logging_config_dict)
     main()
