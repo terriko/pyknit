@@ -1,11 +1,10 @@
-# Copyright (C) 2021 Terri Oda
+# Copyright (C) 2022 Terri Oda
 # SPDX-License-Identifier: GPL-2.0-or-later
 """
 pyKnit: a set of tools for knitters to do math, create charts, customise
 patterns and more
 """
 
-import argparse
 import logging
 import math
 from logging.config import dictConfig
@@ -24,7 +23,7 @@ logging_config_dict = dict(
     root={"handlers": ["console"], "level": logging.DEBUG},
 )
 
-VERSION = "pyKnit 0.0.5a"
+VERSION = "pyKnit 0.0.6"
 
 # Increase and decrease functions
 
@@ -198,33 +197,3 @@ def raglan_increases(
 
     return instruction_string
 
-
-def main():
-    logging.info(f"VERSION = {VERSION}")
-    desc = """
-    This package is intended for use as a library inside jupyter notebook,
-    so that you can see charts as they're parsed.
-
-    For fun, this command line version will take a string and attempt to parse
-    it into a python array of individual stitches.
-    """
-    parser = argparse.ArgumentParser(description=desc)
-    parser.add_argument(
-        "instruction_row", help="A row of knitting instructions. e.g. 'k2 p4'",
-    )
-    args = parser.parse_args()
-    legend = {
-        "k": "k",
-        "p": "p",
-        "kfb": "kfb",
-        "ssk": "ssk",
-        "k2tog": "k2tog",
-        "p2tog": "p2tog",
-    }
-
-    print(parse_written(args.instruction_row, legend))
-
-
-if __name__ == "__main__":
-    dictConfig(logging_config_dict)
-    main()
