@@ -11,7 +11,8 @@ pyKnit.GaugeSwatch: Tools for measurement and gauge swatching
 
 import math
 from typing import Set
-from pydantic import BaseModel, PositiveInt, PositiveFloat, validate_arguments
+
+from pydantic import BaseModel, PositiveFloat, PositiveInt, validate_arguments
 from pydantic.typing import Literal
 
 

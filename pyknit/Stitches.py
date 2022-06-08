@@ -1,5 +1,6 @@
 from PIL import Image, ImageDraw, ImageFont
 
+
 def box(fname, cell_width, cell_height, stitch_width):
     chart_image = Image.new(
         "RGB", (cell_width*stitch_width, cell_height), "#ffffff"

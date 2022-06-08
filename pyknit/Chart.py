@@ -9,11 +9,13 @@ patterns and more
 pyKnit.Chart: chart and pattern parsing functions
 """
 
-from posixpath import relpath
+import os
+import os.path
 import re
-from PIL import Image, ImageDraw, ImageFont
+from posixpath import relpath
 from typing import Dict, List, Sequence, Set
-import os.path, os
+
+from PIL import Image, ImageDraw, ImageFont
 
 
 class Stitch:
