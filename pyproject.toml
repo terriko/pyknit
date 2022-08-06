@@ -1,0 +1,24 @@
+[project]
+name = "pyknit"
+version = "0.0.6"
+authors = [
+  { name="Terri Oda", email="terri@toybox.ca" },
+]
+description = "A set of math and charting tools for knitters."
+readme = "README.md"
+license = { file="LICENSE" }
+requires-python = ">=3.7"
+classifiers = [
+    "Development Status :: 1 - Planning",
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/terriko/pyknit"
+"Bug Tracker" = "https://github.com/terriko/pyknit/issues"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
