@@ -18,9 +18,9 @@ from pydantic.typing import Literal
 
 class GaugeSwatch(BaseModel):
     """Information from a gauge swatch"""
-    row_count: PositiveInt
+    row_count: PositiveFloat
     row_measure: PositiveFloat
-    stitch_count: PositiveInt
+    stitch_count: PositiveFloat
     stitch_measure: PositiveFloat
     units: Literal['cm', 'in']
     # TODO: add yardage/weight for calculations?
