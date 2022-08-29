@@ -1,7 +1,7 @@
 # Copyright (C) 2021 Terri Oda
 # SPDX-License-Identifier: GPL-2.0-or-later
 
-#!python
+# !python
 """
 pyKnit: a set of tools for knitters to do math, create charts, customise
 patterns and more
@@ -9,11 +9,9 @@ patterns and more
 pyKnit.Chart: chart and pattern parsing functions
 """
 
-import os
 import os.path
 import re
-from posixpath import relpath
-from typing import Dict, List, Sequence, Set
+from typing import Dict, List
 
 from PIL import Image, ImageDraw, ImageFont
 
@@ -51,75 +49,134 @@ stitch_legend = {  # Default legend. Incomplete for now.
     "k": Stitch(instruction="knit", symbol=" ", width=1),
     "kfb": Stitch(
         instruction="knit front and back",
-        symbol="V",
-        width=1,
+        symbol="V", width=1,
     ),
     "k2tog": Stitch(
         instruction="knit two together",
-        symbol="/",
-        width=1,
+        symbol="/", width=1,
     ),
     "yo": Stitch(instruction="yarn over", symbol="O", width=1),
     "p": Stitch(
         instruction="purl",
-        symbol=".",
-        width=1,
+        symbol=".", width=1,
     ),
     "ssk": Stitch(
         instruction="slip slip knit",  # left-leaning decrease
-        symbol="\\",
-        width=1,
+        symbol="\\", width=1,
     ),
     "C1-1L": Stitch(
         instruction="sl 1st onto cn, with cn in front, k1, k1 from cn",
-        symbol=os.path.join(symbol_dir, "C1-1L.png"),
-        width=2,
+        symbol=os.path.join(symbol_dir, "C1-1L.png"), width=2,
     ),
     "C1-1R": Stitch(
         instruction="sl 1st onto cn, with cn in back, k1, k1 from cn",
-        symbol=os.path.join(symbol_dir, "C1-1R.png"),
-        width=2,
+        symbol=os.path.join(symbol_dir, "C1-1R.png"), width=2,
     ),
     "C2-1L": Stitch(
         instruction="sl 2st onto cn, with cn in front, k1, k2 from cn",
-        symbol=os.path.join(symbol_dir, "C2-1L.png"),
-        width=3,
+        symbol=os.path.join(symbol_dir, "C2-1L.png"), width=3,
     ),
     "C2-1R": Stitch(
         instruction="sl 2st onto cn, with cn in back, k1, k2 from cn",
-        symbol=os.path.join(symbol_dir, "C2-1R.png"),
-        width=3,
+        symbol=os.path.join(symbol_dir, "C2-1R.png"), width=3,
     ),
     "C2-1PL": Stitch(
         instruction="sl 2st onto cn, with cn in front, p1, k2 from cn",
-        symbol=os.path.join(symbol_dir, "C2-1PL.png"),
-        width=3,
+        symbol=os.path.join(symbol_dir, "C2-1PL.png"), width=3,
     ),
     "C2-1PR": Stitch(
         instruction="sl 2st onto cn, with cn in back, p1, k2 from cn",
-        symbol=os.path.join(symbol_dir, "C2-1PR.png"),
-        width=3,
+        symbol=os.path.join(symbol_dir, "C2-1PR.png"), width=3,
     ),
     "C2-2L": Stitch(
         instruction="sl 2st onto cn, with cn in front, k2, k2 from cn",
-        symbol=os.path.join(symbol_dir, "C2-2L.png"),
-        width=4,
+        symbol=os.path.join(symbol_dir, "C2-2L.png"), width=4,
     ),
     "C2-2R": Stitch(
         instruction="sl 2st onto cn, with cn in back, k2, k2 from cn",
-        symbol=os.path.join(symbol_dir, "C2-2R.png"),
-        width=4,
+        symbol=os.path.join(symbol_dir, "C2-2R.png"), width=4,
     ),
 }
-## Chart and pattern parsing functions
+
+stitch_legend_japanese = {  # Legend for Japanese Symbols. Only a portion of available symbols provided.
+    "NA": Stitch(
+        instruction="no stitch", 
+        symbol=os.path.join(symbol_dir + "\japanese", "no-stitch.png"), width=1),
+    "k": Stitch(
+        instruction="knit", 
+        symbol=os.path.join(symbol_dir + "\japanese", "box.png"), width=1),
+    "ktbl": Stitch(
+        instruction="knit through the back loop", 
+        symbol=os.path.join(symbol_dir + "\japanese", "ktbl.png"), width=1),
+    "k2tog": Stitch(
+        instruction="knit two together", 
+        symbol=os.path.join(symbol_dir + "\japanese", "k2tog.png"), width=1),
+    "k3tog": Stitch(
+        instruction="knit three together", 
+        symbol=os.path.join(symbol_dir + "\japanese", "k3tog.png"), width=1),
+    "k4tog": Stitch(
+        instruction="knit four together", 
+        symbol=os.path.join(symbol_dir + "\japanese", "k4tog.png"), width=1),
+    "yo": Stitch(
+        instruction="yarn over", 
+        symbol=os.path.join(symbol_dir + "\japanese", "yarn_over.png"), width=1),
+    "byo": Stitch(
+        instruction="backwards yarn over", 
+        symbol=os.path.join(symbol_dir + "\japanese", "byo.png"), width=1),
+    "p": Stitch(
+        instruction="purl", 
+        symbol=os.path.join(symbol_dir + "\japanese", "purl.png"), width=1),
+    "ptbl": Stitch(
+        instruction="purl through the back loop", 
+        symbol=os.path.join(symbol_dir + "\japanese", "ptbl.png"), width=1),
+    "p2tog": Stitch(
+        instruction="purl two together", 
+        symbol=os.path.join(symbol_dir + "\japanese", "p2tog.png"), width=1),
+    "ssk": Stitch(
+        instruction="[slip 1 kwise] twice, return both back to LN, k2togtbl",
+        symbol=os.path.join(symbol_dir + "\japanese", "ssk.png"), width=1),  # left leaning decrease
+    "skp": Stitch(
+        instruction="slip knit pass over (same as ssk)", 
+        symbol=os.path.join(symbol_dir + "\japanese", "ssk.png"), width=1),  # left leaning decrease
+    "ssp": Stitch(
+        instruction="[slip 1 kwise] twice, slip 2 stitches back to LN, then p2togtbl",
+        symbol=os.path.join(symbol_dir + "\japanese", "ssp.png"), width=1),
+    "sk2togp": Stitch(
+        instruction="slip 1 kwise, k2tog, psso", 
+        symbol=os.path.join(symbol_dir + "\japanese", "sk2togp"), width=1),
+    "sl2kp2": Stitch(
+        instruction="sl 2 sts together kwise, k1, psso",
+        symbol=os.path.join(symbol_dir + "\japanese", "sl2kp2.png"), width=1),
+    "s3kp3": Stitch(
+        instruction="[slip 1 kwise] 3 times, k1, psso", 
+        symbol=os.path.join(symbol_dir + "\japanese", "s3kp3"),width=1),
+    "C1-1L": Stitch(
+        instruction="With RN, go behind first st and k second st without removing; k first st, slip both off LN",
+        symbol=os.path.join(symbol_dir + "\japanese", "C1-1L.png"), width=2),
+    "C1-1R": Stitch(
+        instruction="with RN, go in front of first st and k second st without removing; k first st, slip both off LN",
+        symbol=os.path.join(symbol_dir + "\japanese", "C1-1R.png"), width=2),
+    "C1-1PL": Stitch(
+        instruction="With RN, go behind first st and p second st without removing; k first st, slip both off LN",
+        symbol=os.path.join(symbol_dir + "\japanese", "C1-1PL.png"), width=2),
+    "C1-1PR": Stitch(
+        instruction="With RN, go in front of first st and k second st without removing, p first st, slip both off LN",
+        symbol=os.path.join(symbol_dir + "\japanese", "C1-1PR.png"), width=2),
+
+}
 
 
-def parse_row(row: str, legend: Legend = stitch_legend) -> List[str]:
+# Chart and pattern parsing functions
+
+def parse_row(row: str, legend=None) -> List[Stitch]:
+    # legend=None allows a mutable parameter here - important for japanese legend option
     # I don't think a set is the right return type, order is important here
     """Parse a written set of knitting instructions and print an array of
     stitches using a legend.  This is a stand in for eventually printing a
     chart."""
 
+    if legend is None:
+        legend = stitch_legend
     stitch_array = []
     for section in row.split(" "):
 
@@ -144,7 +201,9 @@ def parse_row(row: str, legend: Legend = stitch_legend) -> List[str]:
     return stitch_array
 
 
-def parse_chart(chart_instructions: str, legend: Legend = stitch_legend) -> Pattern:
+def parse_chart(chart_instructions: str, legend=None) -> Pattern:
+    if legend is None:
+        legend = stitch_legend
     return [parse_row(row, legend) for row in chart_instructions.split("\n")]
 
 
@@ -156,17 +215,16 @@ def print_row(stitch_array: PatternRow) -> Image:
     chart_image = Image.new(
         "RGB",
         ((cell_width + 1) * sum(st.width for st in stitch_array), cell_height),
-        (200, 200, 200),
+        (255, 255, 255),
     )
 
     # draw some gridlines
     draw = ImageDraw.Draw(chart_image)
 
     # draw symbol for each cell
-    fnt = ImageFont.truetype("cour.ttf", 40)
+    fnt = ImageFont.truetype("Times.ttf", 40)
     position = 0
     for i, stitch in enumerate(stitch_array):
-
         # for i in range(1, len(stitch_array)):
         position = sum(st.width for st in stitch_array[: i + 1]) * (cell_width + 1)
         draw.line((position, 0) + (position, cell_height), fill=128)
@@ -183,7 +241,7 @@ def print_row(stitch_array: PatternRow) -> Image:
 
 
 def instruction_to_plot_order(
-    input_array: Pattern, vertical_order: str = "bt", horizontal_order: str = "rl"
+        input_array: Pattern, vertical_order: str = "bt", horizontal_order: str = "rl"
 ) -> Pattern:
     # input_array = [list(row) for row in pattern.lstrip().rstrip().split("\n")]
     vertical_ordered = (
@@ -197,7 +255,7 @@ def instruction_to_plot_order(
 
 
 def plot_chart(
-    stitch_array: Pattern, lr_direction: str = "lr", tb_direction: str = "tb"
+        stitch_array: Pattern, lr_direction: str = "lr", tb_direction: str = "tb"
 ) -> Image:
     """Print a chart from a stitch array"""
 
@@ -224,14 +282,14 @@ def plot_chart(
     chart_image = Image.new(
         "RGB",
         (cell_width * (longest_row_len + 1), cell_height * (num_rows + 1)),
-        (200, 200, 200),
+        (255, 255, 255),
     )
 
     # draw some gridlines
     draw = ImageDraw.Draw(chart_image)
 
     # draw symbol for each cell
-    fnt = ImageFont.truetype("cour.ttf", 35)
+    fnt = ImageFont.truetype("Inkfree.ttf", 35)
     color_st_pattern = r"#[0-9a-fA-F]{6}"
 
     for st_y, row in enumerate(pattern_to_plot):
@@ -243,7 +301,7 @@ def plot_chart(
             stitch_graphic = stitch.symbol.endswith(".png")
 
             if (
-                stitch_graphic
+                    stitch_graphic
             ):  # this is really ugly, fix path to symbols as part of the symbol name?
                 with Image.open(stitch.symbol) as sym:
                     chart_image.paste(sym, (cur_x, cur_y))
