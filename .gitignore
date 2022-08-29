@@ -138,3 +138,5 @@ dmypy.json
 .idea/pyknit.iml
 .idea/vcs.xml
 .idea/workspace.xml
+.idea/inspectionProfiles/Project_Default.xml
+PyKnit_Demo.ipynb
