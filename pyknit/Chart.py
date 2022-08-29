@@ -162,6 +162,12 @@ stitch_legend_japanese = {  # Legend for Japanese Symbols. Only a portion of ava
     "C1-1PR": Stitch(
         instruction="With RN, go in front of first st and k second st without removing, p first st, slip both off LN",
         symbol=os.path.join(symbol_dir + "\japanese", "C1-1PR.png"), width=2),
+    "C4L": Stitch(
+        instruction="Place 1 st on CN, hold to front, k3; k1 from CN",
+        symbol=os.path.join(symbol_dir + "\japanese", "C4L.png"), width=4),
+    "C4R": Stitch(
+        instruction="Place 3 sts on CN, hold to back, k1; k3 from CN",
+        symbol=os.path.join(symbol_dir + "\japanese", "C4R.png"), width=4),
 
 }
 
