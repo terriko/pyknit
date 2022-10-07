@@ -133,3 +133,10 @@ dmypy.json
 
 # Folder with images in
 .pyknit/symbols/
+.idea/misc.xml
+.idea/modules.xml
+.idea/pyknit.iml
+.idea/vcs.xml
+.idea/workspace.xml
+.idea/inspectionProfiles/Project_Default.xml
+PyKnit_Demo.ipynb
