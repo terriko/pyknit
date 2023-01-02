@@ -77,15 +77,156 @@ def increase_evenly(
     return instruction_string
 
 
+
+def decreaseEvenlyRound(stCount, decreaseSts):
+    decreasePattern = '['
+    leftOver = stCount % decreaseSts
+    if leftOver == 0:
+        k = (stCount / decreaseSts) - 2
+        times = decreaseSts
+        if k != 0:
+            decreasePattern += 'k' + str(int(k)) + ', '
+        decreasePattern += 'k2tog] * ' + str(int(times))
+        if times == 1:
+            decreasePattern += ' time'
+        else:
+            decreasePattern += ' times'
+    else:
+        k = math.floor(stCount / decreaseSts) - 2
+        kHigher = k + 1
+        higherTimes = stCount % decreaseSts
+        times = decreaseSts - higherTimes
+        leftOver = stCount - (k + 2) * times - (kHigher + 2) * higherTimes
+        kString = 'k2tog' if k == 0 else 'k' + str(k) + ', k2tog'
+        kHigherString = 'k2tog' if kHigher == 0 else 'k' + str(int(kHigher)) + ', k2tog'
+        if (times % 2 == 0):
+            times = times / 2
+            timesString = kString if times == 1 else ('[' + kString + '] * ' + str(int(times)) + ' times')
+            higherTimesString = kHigherString if higherTimes == 1 else (
+                        '[' + kHigherString + '] * ' + str(int(higherTimes)) + ' times')
+            decreasePattern = timesString + ', ' + higherTimesString + ', ' + timesString + ''
+        elif (higherTimes % 2 == 0):
+            higherTimes = higherTimes / 2
+            timesString = kString if times == 1 else ('[' + kString + '] * ' + str(int(times)) + ' times')
+            higherTimesString = kHigherString if higherTimes == 1 else (
+                        '[' + kHigherString + '] * ' + str(int(higherTimes)) + ' times')
+            decreasePattern = higherTimesString + ', ' + timesString + ', ' + higherTimesString + ''
+        else:
+            higherTimes = math.ceil(higherTimes / 2)
+            timesString = kString if times == 1 else ('[' + kString + '] ' + times + ' times, ')
+            higherTimesString = kHigherString if higherTimes == 1 else (
+                        '[' + kHigherString + '] ' + str(int(higherTimes)) + ' times')
+            decreasePattern = higherTimesString + ', ' + timesString
+            higherTimes += -1
+            if (higherTimes != 0):
+                decreasePattern += ''
+    return decreasePattern
+
+
+def decreaseEvenlyFlat(stCount, decreaseSts):
+    decreasePattern = ''
+    leftOver = stCount % decreaseSts
+    if leftOver == 0:
+        k = (stCount / decreaseSts) - 2
+        kFirst = math.ceil(k / 2)
+        kSecond = k - kFirst
+        times = decreaseSts
+        if kFirst != 0:
+            times = times - 1
+            decreasePattern += 'k' + str(int(kFirst)) + ', '
+        if k != 0:
+            decreasePattern += '[k2tog, k' + str(int(k)) + ']'
+        else:
+            decreasePattern += '[k2tog] '
+        if times > 1:
+            decreasePattern += ' * ' + str(int(times)) + ' times'
+        if kSecond != 0:
+            decreasePattern += ', k2tog, k' + str(int(kSecond))
+        decreasePattern += ''
+
+    else:
+        k = math.floor(stCount / decreaseSts) - 2
+        kHigher = k + 1
+        higherTimes = stCount % decreaseSts
+        times = decreaseSts - higherTimes
+        leftOver = stCount - (k + 2) * times - (kHigher + 2) * higherTimes
+        kString = 'k2tog, k' + str(int(k)) if k != 0 else 'k2tog'
+        kHigherString = 'k2tog, k' + str(int(kHigher)) if kHigher != 0 else 'k2tog'
+
+        if times % 2 == 0:
+            times = times / 2
+            higherTimes = higherTimes - 1
+            higherTimesString = ''
+            if higherTimes > 0:
+                higherTimesString = ', ' + kHigherString if higherTimes == 1 else (
+                            ', [' + kHigherString + '] *' + str(int(higherTimes)) + ' times')
+            timesString = ', ' + kString if times == 1 else (', [' + kString + '] * ' + str(int(times)) + ' times')
+            balancedStrFirst = 'k' + str(int(math.ceil(kHigher / 2))) if math.ceil(kHigher / 2) != 0 else ''
+            balancedStrLast = ', k2tog k' + str(int(kHigher - math.ceil(kHigher / 2))) + '' if (kHigher - math.ceil(
+                kHigher / 2)) != 0 else ''
+            decreasePattern = balancedStrFirst + timesString + higherTimesString + timesString + balancedStrLast
+        elif higherTimes % 2 == 0:
+            higherTimes = higherTimes / 2
+            times = times - 1
+            timesString = ''
+            if (times > 0):
+                timesString = kString if times == 1 else ('[' + kString + '] * ' + times + ' times')
+            higherTimesString = kHigherString if higherTimes == 1 else (
+                        '[' + kHigherString + '] * ' + str(int(higherTimes)) + ' times')
+            balancedStrFirst = 'k' + str(int(math.ceil(k / 2))) + ', ' if math.ceil(k / 2) != 0 else ''
+            balancedStrLast = ', k2tog k' + str(int(k - math.ceil(k / 2))) + '' if (k - math.ceil(
+                k / 2)) != 0 else ', k2tog'
+            decreasePattern = balancedStrFirst + higherTimesString + timesString + ', ' + higherTimesString + balancedStrLast
+
+
+        else:
+            higherTimes = math.ceil(higherTimes / 2)
+            higherTimesString = ''
+            if (higherTimes > 0):
+                higherTimesString = kHigherString if higherTimes == 1 else (
+                            '[' + kHigherString + '] * ' + str(int(higherTimes - 1)) + ' times, ')
+            timesString = kString if times == 1 else ('[' + kString + '] * ' + times + ' times, ')
+            balancedStrFirst = 'k' + str(int(math.ceil(kHigher / 2))) + ', ' if math.ceil(kHigher / 2) != 0 else ''
+            balancedStrLast = ', k2tog k' + str(int(kHigher - math.ceil(kHigher / 2))) + '' if (kHigher - math.ceil(
+                kHigher / 2)) != 0 else ', k2tog'
+            decreasePattern = balancedStrFirst + higherTimesString + timesString
+
+            higherTimes += -1
+
+            if (higherTimes != 0):
+                higherTimesString = kHigherString if higherTimes == 1 else (
+                            '[' + kHigherString + '] * ' + str(int(higherTimes)) + ' times')
+                decreasePattern += higherTimesString
+            decreasePattern += balancedStrLast
+    return decreasePattern
+
+
 def decrease_evenly(
-    starting_count: PositiveInt, decrease_number: PositiveInt, in_the_round: bool = False
+        starting_count: PositiveInt, decrease_number: PositiveInt, in_the_round: bool = False
 ):
     """ A function to figure out spacing for decreases """
-    if decrease_number > starting_count:
-        logging.error(
-            f"Error: Decrease number ({decrease_number}) is bigger than the starting count ({starting_count})"
-        )
+    if starting_count < 2:
+        msg = f"You need to have at least 2 stitches; starting_count={starting_count}"
+        logging.error(msg)
         raise ValueError
+    if decrease_number < 2:
+        msg = f"the amount of decrease needs to be at least 2; decrease_number={decrease_number}."
+        logging.error(msg)
+        raise ValueError
+    if decrease_number > starting_count / 2:
+        msg = f"the amount of decrease needs to be less than half of starting_count; decrease_number={decrease_number} > starting_count/2={starting_count / 2}"
+        logging.error(msg)
+        raise ValueError
+    if decrease_number > starting_count:
+        msg = f"Error: Decrease number ({decrease_number}) is bigger than the starting count ({starting_count})"
+        logging.error(msg)
+        raise ValueError
+
+    if in_the_round:
+        result = decreaseEvenlyRound(starting_count, decrease_number)
+    else:
+        result = decreaseEvenlyFlat(starting_count, decrease_number)
+    return result
 
 
 def sleeve_decreases(
