@@ -77,18 +77,15 @@ def increase_evenly(
     return instruction_string
 
 
-def decrease_evenly_round(starting_count, decrease_number):
+def decrease_evenly_round(starting_count: PositiveInt, decrease_number: PositiveInt) -> str:
     """
     A function to figure out spacing for decreases across a circular round
     """
-    decrease_pattern = '['
     left_over = starting_count % decrease_number
     if left_over == 0:
         k = (starting_count / decrease_number) - 2
         times = decrease_number
-        if k != 0:
-            decrease_pattern += 'k' + str(int(k)) + ', '
-        decrease_pattern += 'k2tog] * ' + str(int(times))
+        decrease_pattern = f'[k{k:.0f}, k2tog] * {times:.0f}'
         if times == 1:
             decrease_pattern += ' time'
         else:
@@ -98,34 +95,30 @@ def decrease_evenly_round(starting_count, decrease_number):
         k_higher = k + 1
         higher_times = starting_count % decrease_number
         times = decrease_number - higher_times
-        left_over = starting_count - (k + 2) * times - (k_higher + 2) * higher_times
-        k_string = 'k2tog' if k == 0 else 'k' + str(k) + ', k2tog'
-        k_higher_string = 'k2tog' if k_higher == 0 else 'k' + str(int(k_higher)) + ', k2tog'
+        k_string = 'k2tog' if k == 0 else f'k{k:.0f}, k2tog'
+        k_higher_string = 'k2tog' if k_higher == 0 else f'k{k_higher:.0f}, k2tog'
         if times % 2 == 0:
             times = times / 2
-            times_string = k_string if times == 1 else ('[' + k_string + '] * ' + str(int(times)) + ' times')
-            higher_times_string = k_higher_string if higher_times == 1 else (
-                        '[' + k_higher_string + '] * ' + str(int(higher_times)) + ' times')
-            decrease_pattern = times_string + ', ' + higher_times_string + ', ' + times_string + ''
+            times_string = k_string if times == 1 else f'[{k_string}] * {times:.0f} times'
+            higher_times_string = k_higher_string if higher_times == 1 else f'[{k_higher_string:.0f}] * {higher_times:.0f} times'
+            decrease_pattern = f'{times_string}, {higher_times_string}, {times_string}'
         elif higher_times % 2 == 0:
             higher_times = higher_times / 2
-            times_string = k_string if times == 1 else ('[' + k_string + '] * ' + str(int(times)) + ' times')
-            higher_times_string = k_higher_string if higher_times == 1 else (
-                        '[' + k_higher_string + '] * ' + str(int(higher_times)) + ' times')
-            decrease_pattern = higher_times_string + ', ' + times_string + ', ' + higher_times_string + ''
+            times_string = k_string if times == 1 else f'[{k_string:.0f}] * {times:.0f} times'
+            higher_times_string = k_higher_string if higher_times == 1 else f'[{k_higher_string}] * {higher_times:.0f} times'
+            decrease_pattern = f'{higher_times_string}, {times_string}, {higher_times_string}'
         else:
             higher_times = math.ceil(higher_times / 2)
-            times_string = k_string if times == 1 else ('[' + k_string + '] ' + times + ' times, ')
-            higher_times_string = k_higher_string if higher_times == 1 else (
-                        '[' + k_higher_string + '] ' + str(int(higher_times)) + ' times')
-            decrease_pattern = higher_times_string + ', ' + times_string
+            times_string = k_string if times == 1 else f'[{k_string:.0f}] {times:.0f} times, '
+            higher_times_string = k_higher_string if higher_times == 1 else f'[{k_higher_string:.0f}] {higher_times:.0f} times'
+            decrease_pattern = f'{higher_times_string:.0f}, {times_string:.0f}'
             higher_times += -1
             if higher_times != 0:
                 decrease_pattern += ''
     return decrease_pattern
 
 
-def decrease_evenly_flat(starting_count, decrease_number):
+def decrease_evenly_flat(starting_count: PositiveInt, decrease_number: PositiveInt) -> str:
     """
     A function to figure out spacing for decreases across a flat row
     """
@@ -136,17 +129,18 @@ def decrease_evenly_flat(starting_count, decrease_number):
         k_first = math.ceil(k / 2)
         k_second = k - k_first
         times = decrease_number
+        decrease_pattern = ''
         if k_first != 0:
             times = times - 1
-            decrease_pattern += 'k' + str(int(k_first)) + ', '
+            decrease_pattern += f'k{k_first:.0f}, '
         if k != 0:
-            decrease_pattern += '[k2tog, k' + str(int(k)) + ']'
+            decrease_pattern += f'[k2tog, k{k:.0f}]'
         else:
             decrease_pattern += '[k2tog] '
         if times > 1:
-            decrease_pattern += ' * ' + str(int(times)) + ' times'
+            decrease_pattern += f' * {times:.0f} times'
         if k_second != 0:
-            decrease_pattern += ', k2tog, k' + str(int(k_second))
+            decrease_pattern += f', k2tog, k{k_second:.0f}'
         decrease_pattern += ''
 
     else:
@@ -183,7 +177,6 @@ def decrease_evenly_flat(starting_count, decrease_number):
                 k / 2)) != 0 else ', k2tog'
             decrease_pattern = balanced_str_first + higher_times_string + times_string + ', ' + higher_times_string + balanced_str_last
 
-
         else:
             higher_times = math.ceil(higher_times / 2)
             higher_times_string = ''
@@ -208,7 +201,7 @@ def decrease_evenly_flat(starting_count, decrease_number):
 
 def decrease_evenly(
         starting_count: PositiveInt, decrease_number: PositiveInt, in_the_round: bool = False
-):
+) -> str:
     """
     A function to figure out spacing for decreases
     """
@@ -221,7 +214,7 @@ def decrease_evenly(
         logging.error(msg)
         raise ValueError
     if decrease_number > starting_count / 2:
-        msg = f"""the amount of decrease needs to be less than half of starting_count; 
+        msg = f"""the amount of decrease needs to be less than half of starting_count;
         decrease_number={decrease_number} > starting_count/2={starting_count / 2}"""
         logging.error(msg)
         raise ValueError
