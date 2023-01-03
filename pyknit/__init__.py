@@ -77,15 +77,149 @@ def increase_evenly(
     return instruction_string
 
 
+def decrease_evenly_round(starting_count: PositiveInt, decrease_number: PositiveInt) -> str:
+    """
+    A function to figure out spacing for decreases across a circular round
+    """
+    left_over = starting_count % decrease_number
+    if left_over == 0:
+        k = (starting_count / decrease_number) - 2
+        times = decrease_number
+        decrease_pattern = f'[k{k:.0f}, k2tog] * {times:.0f}'
+        if times == 1:
+            decrease_pattern += ' time'
+        else:
+            decrease_pattern += ' times'
+    else:
+        k = math.floor(starting_count / decrease_number) - 2
+        k_higher = k + 1
+        higher_times = starting_count % decrease_number
+        times = decrease_number - higher_times
+        k_string = 'k2tog' if k == 0 else f'k{k:.0f}, k2tog'
+        k_higher_string = 'k2tog' if k_higher == 0 else f'k{k_higher:.0f}, k2tog'
+        if times % 2 == 0:
+            times = times / 2
+            times_string = k_string if times == 1 else f'[{k_string}] * {times:.0f} times'
+            higher_times_string = k_higher_string if higher_times == 1 else f'[{k_higher_string:.0f}] * {higher_times:.0f} times'
+            decrease_pattern = f'{times_string}, {higher_times_string}, {times_string}'
+        elif higher_times % 2 == 0:
+            higher_times = higher_times / 2
+            times_string = k_string if times == 1 else f'[{k_string:.0f}] * {times:.0f} times'
+            higher_times_string = k_higher_string if higher_times == 1 else f'[{k_higher_string}] * {higher_times:.0f} times'
+            decrease_pattern = f'{higher_times_string}, {times_string}, {higher_times_string}'
+        else:
+            higher_times = math.ceil(higher_times / 2)
+            times_string = k_string if times == 1 else f'[{k_string:.0f}] {times:.0f} times, '
+            higher_times_string = k_higher_string if higher_times == 1 else f'[{k_higher_string:.0f}] {higher_times:.0f} times'
+            decrease_pattern = f'{higher_times_string:.0f}, {times_string:.0f}'
+            higher_times += -1
+            if higher_times != 0:
+                decrease_pattern += ''
+    return decrease_pattern
+
+
+def decrease_evenly_flat(starting_count: PositiveInt, decrease_number: PositiveInt) -> str:
+    """
+    A function to figure out spacing for decreases across a flat row
+    """
+
+    left_over = starting_count % decrease_number
+    if left_over == 0:
+        k = (starting_count / decrease_number) - 2
+        k_first = math.ceil(k / 2)
+        k_second = k - k_first
+        times = decrease_number
+        decrease_pattern = ''
+        if k_first != 0:
+            times = times - 1
+            decrease_pattern += f'k{k_first:.0f}, '
+        if k != 0:
+            decrease_pattern += f'[k2tog, k{k:.0f}]'
+        else:
+            decrease_pattern += '[k2tog] '
+        if times > 1:
+            decrease_pattern += f' * {times:.0f} times'
+        if k_second != 0:
+            decrease_pattern += f', k2tog, k{k_second:.0f}'
+
+
+    else:
+        k = math.floor(starting_count / decrease_number) - 2
+        k_higher = k + 1
+        higher_times = starting_count % decrease_number
+        times = decrease_number - higher_times
+        left_over = starting_count - (k + 2) * times - (k_higher + 2) * higher_times
+        k_string = f'k2tog, k{k:.0f}' if k != 0 else 'k2tog'
+        k_higher_string = f'k2tog, k{k_higher:.0f}' if k_higher != 0 else 'k2tog'
+
+        if times % 2 == 0:
+            times = times / 2
+            higher_times = higher_times - 1
+            higher_times_string = ''
+            if higher_times > 0:
+                higher_times_string = f', {k_higher_string}' if higher_times == 1 else f', [{k_higher_string}] * {higher_times} times'
+            times_string = f', {k_string}' if times == 1 else f', [{k_string}] * {times:.0f} times'
+            balanced_str_first = f'k{math.ceil(k_higher / 2):.0f}' if math.ceil(k_higher / 2) != 0 else ''
+            balanced_str_last = f', k2tog k{k_higher - math.ceil(k_higher / 2):.0f}' if (k_higher - math.ceil( k_higher / 2)) != 0 else ''
+            decrease_pattern = f"{balanced_str_first}{times_string}{higher_times_string}{times_string}{balanced_str_last}"
+        elif higher_times % 2 == 0:
+            higher_times = higher_times / 2
+            times = times - 1
+            times_string = ''
+            if times > 0:
+                times_string = k_string if times == 1 else f'[{k_string}] * {times} times'
+            higher_times_string = k_higher_string if higher_times == 1 else f'[{k_higher_string}] * {higher_times:.0f} times'
+            balanced_str_first = f'k{math.ceil(k / 2)}, ' if math.ceil(k / 2) != 0 else ''
+            balanced_str_last = f', k2tog k{k - math.ceil(k / 2)}' if (k - math.ceil(k / 2)) != 0 else ', k2tog'
+            decrease_pattern = f"{balanced_str_first}{higher_times_string}{times_string}, {higher_times_string}{balanced_str_last}"
+
+        else:
+            higher_times = math.ceil(higher_times / 2)
+            higher_times_string = ''
+            if higher_times > 0:
+                higher_times_string = k_higher_string if higher_times == 1 else f'[{k_higher_string}] * {higher_times - 1} times, '
+            times_string = k_string if times == 1 else f'[{k_string}] * {times} times, '
+            balanced_str_first = f'k{math.ceil(k_higher / 2)}, ' if math.ceil(k_higher / 2) != 0 else ''
+            balanced_str_last = ', k2tog k{k_higher - math.ceil(k_higher / 2)}' if (k_higher - math.ceil( k_higher / 2)) != 0 else ', k2tog'
+            decrease_pattern = f"{balanced_str_first}{higher_times_string}{times_string}"
+            higher_times += -1
+
+            if higher_times != 0:
+                higher_times_string = k_higher_string if higher_times == 1 else  f'[{k_higher_string}] * {higher_times} times'
+                decrease_pattern += higher_times_string
+            decrease_pattern += balanced_str_last
+    return decrease_pattern
+
+
 def decrease_evenly(
-    starting_count: PositiveInt, decrease_number: PositiveInt, in_the_round: bool = False
-):
-    """ A function to figure out spacing for decreases """
-    if decrease_number > starting_count:
-        logging.error(
-            f"Error: Decrease number ({decrease_number}) is bigger than the starting count ({starting_count})"
-        )
+        starting_count: PositiveInt, decrease_number: PositiveInt, in_the_round: bool = False
+) -> str:
+    """
+    A function to figure out spacing for decreases
+    """
+    if starting_count < 2:
+        msg = f"You need to have at least 2 stitches; starting_count={starting_count}"
+        logging.error(msg)
         raise ValueError
+    if decrease_number < 2:
+        msg = f"the amount of decrease needs to be at least 2; decrease_number={decrease_number}."
+        logging.error(msg)
+        raise ValueError
+    if decrease_number > starting_count / 2:
+        msg = f"""the amount of decrease needs to be less than half of starting_count;
+        decrease_number={decrease_number} > starting_count/2={starting_count / 2}"""
+        logging.error(msg)
+        raise ValueError
+    if decrease_number > starting_count:
+        msg = f"Error: Decrease number ({decrease_number}) is bigger than the starting count ({starting_count})"
+        logging.error(msg)
+        raise ValueError
+
+    if in_the_round:
+        result = decrease_evenly_round(starting_count, decrease_number)
+    else:
+        result = decrease_evenly_flat(starting_count, decrease_number)
+    return result
 
 
 def sleeve_decreases(
@@ -196,4 +330,3 @@ def raglan_increases(
     instruction_string += f"k{front}, pm, k{arm} (arm), pm k{math.ceil(back/2)}"
 
     return instruction_string
-
