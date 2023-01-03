@@ -122,7 +122,7 @@ def decrease_evenly_flat(starting_count: PositiveInt, decrease_number: PositiveI
     """
     A function to figure out spacing for decreases across a flat row
     """
-    decrease_pattern = ''
+
     left_over = starting_count % decrease_number
     if left_over == 0:
         k = (starting_count / decrease_number) - 2
@@ -141,7 +141,7 @@ def decrease_evenly_flat(starting_count: PositiveInt, decrease_number: PositiveI
             decrease_pattern += f' * {times:.0f} times'
         if k_second != 0:
             decrease_pattern += f', k2tog, k{k_second:.0f}'
-        decrease_pattern += ''
+
 
     else:
         k = math.floor(starting_count / decrease_number) - 2
@@ -149,51 +149,43 @@ def decrease_evenly_flat(starting_count: PositiveInt, decrease_number: PositiveI
         higher_times = starting_count % decrease_number
         times = decrease_number - higher_times
         left_over = starting_count - (k + 2) * times - (k_higher + 2) * higher_times
-        k_string = 'k2tog, k' + str(int(k)) if k != 0 else 'k2tog'
-        k_higher_string = 'k2tog, k' + str(int(k_higher)) if k_higher != 0 else 'k2tog'
+        k_string = f'k2tog, k{k:.0f}' if k != 0 else 'k2tog'
+        k_higher_string = f'k2tog, k{k_higher:.0f}' if k_higher != 0 else 'k2tog'
 
         if times % 2 == 0:
             times = times / 2
             higher_times = higher_times - 1
             higher_times_string = ''
             if higher_times > 0:
-                higher_times_string = ', ' + k_higher_string if higher_times == 1 else (
-                            ', [' + k_higher_string + '] *' + str(int(higher_times)) + ' times')
-            times_string = ', ' + k_string if times == 1 else (', [' + k_string + '] * ' + str(int(times)) + ' times')
-            balanced_str_first = 'k' + str(int(math.ceil(k_higher / 2))) if math.ceil(k_higher / 2) != 0 else ''
-            balanced_str_last = ', k2tog k' + str(int(k_higher - math.ceil(k_higher / 2))) + '' if (k_higher - math.ceil(
-                k_higher / 2)) != 0 else ''
-            decrease_pattern = balanced_str_first + times_string + higher_times_string + times_string + balanced_str_last
+                higher_times_string = f', {k_higher_string}' if higher_times == 1 else f', [{k_higher_string}] * {higher_times} times'
+            times_string = f', {k_string}' if times == 1 else f', [{k_string}] * {times:.0f} times'
+            balanced_str_first = f'k{math.ceil(k_higher / 2):.0f}' if math.ceil(k_higher / 2) != 0 else ''
+            balanced_str_last = f', k2tog k{k_higher - math.ceil(k_higher / 2):.0f}' if (k_higher - math.ceil( k_higher / 2)) != 0 else ''
+            decrease_pattern = f"{balanced_str_first}{times_string}{higher_times_string}{times_string}{balanced_str_last}"
         elif higher_times % 2 == 0:
             higher_times = higher_times / 2
             times = times - 1
             times_string = ''
             if times > 0:
-                times_string = k_string if times == 1 else ('[' + k_string + '] * ' + times + ' times')
-            higher_times_string = k_higher_string if higher_times == 1 else (
-                        '[' + k_higher_string + '] * ' + str(int(higher_times)) + ' times')
-            balanced_str_first = 'k' + str(int(math.ceil(k / 2))) + ', ' if math.ceil(k / 2) != 0 else ''
-            balanced_str_last = ', k2tog k' + str(int(k - math.ceil(k / 2))) + '' if (k - math.ceil(
-                k / 2)) != 0 else ', k2tog'
-            decrease_pattern = balanced_str_first + higher_times_string + times_string + ', ' + higher_times_string + balanced_str_last
+                times_string = k_string if times == 1 else f'[{k_string}] * {times} times'
+            higher_times_string = k_higher_string if higher_times == 1 else f'[{k_higher_string}] * {higher_times:.0f} times'
+            balanced_str_first = f'k{math.ceil(k / 2)}, ' if math.ceil(k / 2) != 0 else ''
+            balanced_str_last = f', k2tog k{k - math.ceil(k / 2)}' if (k - math.ceil(k / 2)) != 0 else ', k2tog'
+            decrease_pattern = f"{balanced_str_first}{higher_times_string}{times_string}, {higher_times_string}{balanced_str_last}"
 
         else:
             higher_times = math.ceil(higher_times / 2)
             higher_times_string = ''
             if higher_times > 0:
-                higher_times_string = k_higher_string if higher_times == 1 else (
-                            '[' + k_higher_string + '] * ' + str(int(higher_times - 1)) + ' times, ')
-            times_string = k_string if times == 1 else ('[' + k_string + '] * ' + times + ' times, ')
-            balanced_str_first = 'k' + str(int(math.ceil(k_higher / 2))) + ', ' if math.ceil(k_higher / 2) != 0 else ''
-            balanced_str_last = ', k2tog k' + str(int(k_higher - math.ceil(k_higher / 2))) + '' if (k_higher - math.ceil(
-                k_higher / 2)) != 0 else ', k2tog'
-            decrease_pattern = balanced_str_first + higher_times_string + times_string
-
+                higher_times_string = k_higher_string if higher_times == 1 else f'[{k_higher_string}] * {higher_times - 1} times, '
+            times_string = k_string if times == 1 else f'[{k_string}] * {times} times, '
+            balanced_str_first = f'k{math.ceil(k_higher / 2)}, ' if math.ceil(k_higher / 2) != 0 else ''
+            balanced_str_last = ', k2tog k{k_higher - math.ceil(k_higher / 2)}' if (k_higher - math.ceil( k_higher / 2)) != 0 else ', k2tog'
+            decrease_pattern = f"{balanced_str_first}{higher_times_string}{times_string}"
             higher_times += -1
 
             if higher_times != 0:
-                higher_times_string = k_higher_string if higher_times == 1 else (
-                            '[' + k_higher_string + '] * ' + str(int(higher_times)) + ' times')
+                higher_times_string = k_higher_string if higher_times == 1 else  f'[{k_higher_string}] * {higher_times} times'
                 decrease_pattern += higher_times_string
             decrease_pattern += balanced_str_last
     return decrease_pattern
