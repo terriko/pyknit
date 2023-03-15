@@ -58,12 +58,54 @@ jupyter-lab
 
 ## Using PyKnit
 
+```python
+import pyknit
+
+# Sweater fit check math.  My gauge doesn't match the pattern but I like the
+# fabric I got in my swatch and don't want to change the needle I'm using.
+# What size should I knit?
+
+pattern_g = pyknit.GaugeSwatch(
+    stitch_count=27.5, stitch_measure=10, row_count=40, row_measure=4, units="in"
+)
+my_g = pyknit.GaugeSwatch(
+    stitch_count=23.5, stitch_measure=10, row_count=33, row_measure=4, units="in"
+)
+
+# The closest size to my measurements is the 42in chest one, let's convert that
+
+size3 = pyknit.convert_stitch_measure(42, pattern_g, my_g)
+print(f"{size3=}")
+```
+
+Running that gives a new size of 49 inches. This sweater was designed for +/- 2 inches (it says so in the pattern), so that's too big unless I love a really baggy sweater.
+
+
+```python
+size2 = pyknit.convert_stitch_measure(38, pattern_g, my_g)
+size1 = pyknit.convert_stitch_measure(34, pattern_g, my_g)
+print(f"{size2=}")
+print(f"{size1=}")
+```
+
+Those give me 44.25 inches and 40 inches respectively (rounded to the nearest quarter inch, anyhow)
+
+If I was aiming for exactly 42 inches chest circumference, I'd have the option
+of either knitting the 44 inch one and having 2 inches positive ease (i.e. the
+sweater would be a little loose) or the 40 inch one with -2 inches positive
+ease (i.e. the sweater would stretch to fit me), and I would choose whichever
+one I think I'd like better assuming my swatch is sufficiently stretchy.
+
+This [SweaterFit Example file](https://github.com/terriko/pyknit/blob/main/documentation/SweaterFit.py) is here if you want to sub in your own swatch numbers.
+
+
 [Here's an example of how to calculate sweater sleeve decreases using pyknit](https://github.com/terriko/pyknit/blob/main/documentation/SleeveDecreases.md) to get you started.
 
 For those using Jupyter, there are also several full interactive notebooks available:
 
 * [Sweater Sleeve Decreases](https://github.com/terriko/pyknit/blob/main/documentation/SleeveDecreases.ipynb)
 * [Triangle Hat interactive hat pattern](https://github.com/terriko/pyknit/blob/main/documentation/TriangleHat.ipynb)
+* [Sweater Fit from gauge swatches](https://github.com/terriko/pyknit/blob/main/documentation/SweaterFit.ipynb)
 
 ## Why pyKnit?
 
