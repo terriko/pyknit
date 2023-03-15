@@ -1,6 +1,6 @@
 [project]
 name = "pyknit"
-version = "0.0.6"
+version = "0.0.7"
 authors = [
   { name="Terri Oda", email="terri@toybox.ca" },
 ]
@@ -14,6 +14,9 @@ classifiers = [
     "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
     "Operating System :: OS Independent",
 ]
+
+[project.scripts]
+my-script = "pyknit.pyknit:main"
 
 [project.urls]
 "Homepage" = "https://github.com/terriko/pyknit"
