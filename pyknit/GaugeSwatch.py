@@ -13,7 +13,7 @@ import math
 from typing import Set
 
 from pydantic import BaseModel, PositiveFloat, PositiveInt, validate_arguments
-from pydantic.typing import Literal
+from typing import Literal
 
 
 class GaugeSwatch(BaseModel):
