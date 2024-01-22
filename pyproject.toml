@@ -7,7 +7,7 @@ authors = [
 description = "A set of math and charting tools for knitters."
 readme = "README.md"
 license = { file="LICENSE" }
-requires-python = ">=3.7"
+requires-python = ">=3.9"
 classifiers = [
     "Development Status :: 1 - Planning",
     "Programming Language :: Python :: 3",
